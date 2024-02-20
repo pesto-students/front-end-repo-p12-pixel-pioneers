@@ -1,0 +1,14 @@
+{
+  "msg": "Logged in!",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImlhdCI6MTY3NTI3MzYzNywiZXhwIjoxNjc1MzYwMDM3fQ.SWN6SzUNSGG1pD1lQDVMnF7OF9TLYF_NLX0acT-4Jtc",
+  "user": {
+    "id": 12,
+    "email": "ketan@gmaillds.com",
+    "role": "2",
+    "phone": 0,
+    "password": "$2a$10$oNurLMmYXMhYAC8ad.Wlp.tcj.TaBujQCojj9icmEB7ioWW7bhnFO",
+    "createdAt": "",
+    "updatedAt": "",
+    "last_login": ""
+  }
+}
