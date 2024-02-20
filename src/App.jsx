@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import Store from "./redux/store";
 import "./App.css";
 import Child from "./Child";
+import AppContainer from "./containers/App";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,12 +15,12 @@ function App() {
   return (
     <>
       <Provider store={Store}>
-        {/* <AppContainer /> */}
-        <h1 className="text-3xl text-red-700 font-bold underline">
+        <AppContainer />
+        {/* <h1 className="text-3xl text-red-700 font-bold underline">
           Hello world!
         </h1>
         <Button className="bg-red-700 text-white px-4">button</Button>
-        <Child />
+        <Child /> */}
       </Provider>
     </>
   );
