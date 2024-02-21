@@ -85,12 +85,14 @@ const RoutesFunc = (props) => {
                   path={items.path}
                   component={items.component}
                   exact
+                  key={i}
                   properties={items.properties}
                   {...props}
                 />
               ) : (
                 <PublicRoute
                   path={items.path}
+                  key={i}
                   component={items.component}
                   properties={items.properties}
                   exact

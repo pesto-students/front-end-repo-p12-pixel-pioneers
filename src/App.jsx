@@ -8,6 +8,8 @@ import Store from "./redux/store";
 import "./App.css";
 import Child from "./Child";
 import AppContainer from "./containers/App";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   const [count, setCount] = useState(0);
