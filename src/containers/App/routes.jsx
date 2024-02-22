@@ -6,6 +6,7 @@ import {
   Route,
   Routes,
   Navigate,
+  Outlet,
   //   Redirect,
 } from "react-router-dom";
 // import { getUserAction } from "../../redux/actions";
@@ -14,97 +15,66 @@ import { AuthHelpers } from "../../helpers";
 import Home from "../../components/Home";
 
 const allRoutes = [
-  //   {
-  //     path: APP_ROUTES.LOGIN,
-  //     protected: false,
-  //     properties: { ketan: 1 },
-  //     component: AuthContainer,
-  //   },
-  //   {
-  //     path: APP_ROUTES.REGISTER,
-  //     protected: false,
-  //     component: AuthContainer,
-  //   },
-  //   {
-  //     path: APP_ROUTES.FORGOT_PASSWORD,
-  //     protected: false,
-  //     component: AuthContainer,
-  //   },
   {
     path: APP_ROUTES.HOME,
-    protected: false,
+    isProtected: true,
+    properties: { ketan: 1 },
+    component: Home,
+  },
+  {
+    path: APP_ROUTES.LOGIN,
+    isProtected: false,
+    properties: { ketan: 2 },
     component: Home,
   },
 ];
-const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
-  console.log(rest, "rest");
-  //   const dispatch = useDispatch();
-  //   const userSelector = useSelector((state) => state.UserReducer.user);
-  //   if (!AuthHelpers.isAuthenticated()) {
-  //     return <Navigate replace to={APP_ROUTES.LOGIN}  {...rest} />;
-  //   }
-  //   if (userSelector.data === API_CONSTANTS.init) {
-  //     dispatch(getUserAction());
-  //   }
-
-  //   const { userData } = rest;
-  //   const currentRoute = allRoutes.filter((items) => items.path === rest.path);
-  return (
-    <Route
-      {...rest}
-      render={(routeProps) => <RouteComponent {...routeProps} {...rest} />}
-    />
+const PrivateRoutes = (props) => {
+  console.log(props, "PrivateRoutes");
+  //   let auth = { token: false };
+  const isAuthenticated = true;
+  return isAuthenticated ? (
+    <Outlet {...props} />
+  ) : (
+    <Navigate to={APP_ROUTES.LOGIN} />
   );
 };
-
-const PublicRoute = ({
-  component: Component,
-  properties,
-  restricted,
-  ...rest
-}) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => <Component properties={properties} {...props} />}
-    />
-  );
+const PublicRoutes = (props) => {
+  return <Outlet {...props} />;
 };
-
 const RoutesFunc = (props) => {
   return (
     <>
       <Router>
         <Routes>
-          <Route path={APP_ROUTES.HOME} element={<Home />} />
-          {/* {
-            // props.userData.data ?
-            allRoutes.map((items, i) =>
-              items.protected ? (
-                <PrivateRoute
-                  path={items.path}
-                  component={items.component}
-                  exact
-                  key={i}
-                  properties={items.properties}
-                  {...props}
-                />
-              ) : (
-                <PublicRoute
-                  path={items.path}
-                  key={i}
-                  component={items.component}
-                  properties={items.properties}
-                  exact
-                  {...props}
-                />
-              )
-            )
-          } */}
-          <>
-            {/* <Navigate replace to={"/login"} exact {...props} /> */}
-            {/* <Route path="" component={<></>} /> */}
-          </>
+          <Route element={<PrivateRoutes />}>
+            {allRoutes
+              .filter((route) => route.isProtected)
+              .map(
+                ({ component: Component, path, isProtected, properties }) => (
+                  <Route
+                    element={<Component {...properties} />}
+                    path={path}
+                    exact
+                  />
+                )
+              )}
+            {/* <Route element={<Home />} path="/" exact /> */}
+          </Route>
+          <Route element={<PublicRoutes />}>
+            {allRoutes
+              .filter((route) => !route.isProtected)
+              .map(
+                ({ component: Component, path, isProtected, properties }) => (
+                  <Route
+                    element={<Component {...properties} />}
+                    path={path}
+                    exact
+                  />
+                )
+              )}
+            {/* <Route element={<Home />} path="/" exact /> */}
+          </Route>
+          <Route path="*" element={<Navigate to={APP_ROUTES.HOME} replace />} />
         </Routes>
       </Router>
     </>
