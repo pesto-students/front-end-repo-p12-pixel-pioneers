@@ -10,6 +10,7 @@ export const APP_ROUTES = {
   FORGOT_PASSWORD: "/forgotpassword",
   ONBOARDING: "/onboarding",
   HOME: "/",
+  MANUAL_MODE: "/create-manual",
 };
 
 export const AUTH_TOKEN = "authenticationToken";

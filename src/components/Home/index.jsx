@@ -18,6 +18,7 @@ import ModesCard from "./ModesCard";
 import AccordionItem from "./Accordian";
 import TeamMemberCard from "./TeamMemberCard";
 import Carousel from "./Carousel";
+import Header from "../Header";
 
 // import { loginAction } from "./redux/actions";
 
@@ -126,55 +127,7 @@ function Home(props) {
   ];
   return (
     <div className="">
-      <header className="flex flex-row">
-        <Link
-          className="font-normal flex items-center   text-black w-1/6 text-start"
-          to={APP_ROUTES.HOME}
-        >
-          Quizzify
-        </Link>
-        {/* <p className="font-normal text-black mr-auto"></p> */}
-        <nav className="grid grid-cols-6 w-5/6">
-          <Link
-            className="font-normal flex items-center   text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            <Button className="py-1 px-4 border rounded-sm border-black border-1">
-              Login/Signup
-            </Button>
-          </Link>
-        </nav>
-      </header>
+      <Header />
       <section className=" container my-[10vh] justify-between flex gap-2 flex-row ">
         <div className="content  flex flex-col gap-8 w-[35%]">
           <h1 className="text-start font-medium text-5xl">

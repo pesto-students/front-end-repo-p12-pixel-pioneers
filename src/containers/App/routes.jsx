@@ -13,6 +13,7 @@ import {
 import { API_CONSTANTS, APP_ROUTES } from "../../utils";
 import { AuthHelpers } from "../../helpers";
 import Home from "../../components/Home";
+import CreateFlow from "../CreateFlow";
 
 const allRoutes = [
   {
@@ -26,6 +27,12 @@ const allRoutes = [
     isProtected: false,
     properties: { ketan: 2 },
     component: Home,
+  },
+  {
+    path: APP_ROUTES.MANUAL_MODE,
+    isProtected: false,
+    properties: { mode: "manual" },
+    component: CreateFlow,
   },
 ];
 const PrivateRoutes = (props) => {
@@ -50,10 +57,14 @@ const RoutesFunc = (props) => {
             {allRoutes
               .filter((route) => route.isProtected)
               .map(
-                ({ component: Component, path, isProtected, properties }) => (
+                (
+                  { component: Component, path, isProtected, properties },
+                  index
+                ) => (
                   <Route
                     element={<Component {...properties} />}
                     path={path}
+                    key={index}
                     exact
                   />
                 )
@@ -64,10 +75,14 @@ const RoutesFunc = (props) => {
             {allRoutes
               .filter((route) => !route.isProtected)
               .map(
-                ({ component: Component, path, isProtected, properties }) => (
+                (
+                  { component: Component, path, isProtected, properties },
+                  index
+                ) => (
                   <Route
                     element={<Component {...properties} />}
                     path={path}
+                    key={index}
                     exact
                   />
                 )
