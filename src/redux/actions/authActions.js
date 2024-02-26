@@ -8,7 +8,7 @@ import { Auth_Services } from "../services";
 
 // import auth_services from "../services/auth_services";
 
-const defaultDispatchAction = (type, payload) => ({
+export const defaultDispatchAction = (type, payload) => ({
   type,
   payload,
 });
