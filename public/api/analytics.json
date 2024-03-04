@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "analytics": [
+      { "option": "Paris", "frequency": 2, "correct_answer": true },
+      { "option": "London", "frequency": 0 },
+      { "option": "Berlin", "frequency": 1 }
+    ]
+  },
+  {
+    "question": "What is the largest planet in our solar system?",
+    "analytics": [
+      { "option": "Mars", "frequency": 0 },
+      { "option": "Jupiter", "frequency": 2, "correct_answer": true },
+      { "option": "Venus", "frequency": 1 },
+      { "option": "Saturn", "frequency": 0 }
+    ]
+  },
+  {
+    "question": "Do you like this quiz?",
+    "analytics": [
+      { "option": "Yes", "frequency": 2, "correct_answer": true },
+      { "option": "No", "frequency": 1 }
+    ]
+  }
+]

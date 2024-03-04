@@ -1,0 +1,50 @@
+{
+  "id": "123e4567-e89b-12d3-a456-426655440022",
+  "title": "Sample Quiz",
+  "status": "Active",
+  "createdAt": "2024-03-01T00:00:00.000Z",
+  "lastUpdatedAt": "2024-03-01T00:00:00.000Z",
+  "createdBy": "65de052a32fc8813f650195b",
+  "lastUpdatedBy": "65de052a32fc8813f650195b",
+  "persistQuestions": false,
+  "userAnswers": [
+    {
+      "user": {
+        "email": "user1@example.com"
+      },
+      "answers": [0, 1, 0]
+    },
+    {
+      "user": {
+        "email": "user2@example.com"
+      },
+      "answers": [1, 0, 0]
+    },
+    {
+      "user": {
+        "email": "user3@example.com"
+      },
+      "answers": [0, 0, 1]
+    }
+  ],
+  "questions": [
+    {
+      "question_title": "What is the capital of France?",
+      "options": ["Paris", "London", "Berlin"],
+      "correct_answer": 0,
+      "question_type": "MCQ"
+    },
+    {
+      "question_title": "What is the largest planet in our solar system?",
+      "options": ["Mars", "Jupiter", "Venus", "Saturn"],
+      "correct_answer": 1,
+      "question_type": "MCQ"
+    },
+    {
+      "question_title": "Do you like this quiz?",
+      "options": ["Yes", "No"],
+      "correct_answer": 0,
+      "question_type": "MCQ"
+    }
+  ]
+}
