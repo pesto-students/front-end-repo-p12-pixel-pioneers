@@ -4,25 +4,40 @@ import { APP_ROUTES } from "../../utils";
 import { question_types } from "./constants";
 import { Option, Select, Input, Button } from "@mui/base";
 import OptionComponent from "./Option";
+import { toast } from "react-toastify";
 const Sidebar = (props) => {
   const location = useLocation();
-  const { addQuestion } = props;
-  const [question, setQuestion] = useState({
-    question_type: question_types.MCQ,
-    question: "",
-    options: [],
-    answerIndex: null,
+  const {
+    addQuestion,
+    currQuestion,
+    setCurrQuestion,
+    updateQuesIndex,
+    updateQues,
+    isPoll,
+    firstQues,
+  } = props;
+  const [allOptionsFilled, setAllOptionsFilled] = useState(false);
+  const [errors, setErrors] = useState({
+    question: false,
+    options: false,
   });
+
+  // const [question, setQuestion] = useState({
+  //   question_type: question_types.MCQ,
+  //   question: "",
+  //   options: [],
+  //   answerIndex: null,
+  // });
   const setQuestionState = (key, value) => {
-    setQuestion({
-      ...question,
+    setCurrQuestion({
+      ...currQuestion,
       [key]: Array.isArray(value) ? value.map((item) => item) : value,
     });
   };
   const setOptions = (value, changeIndex) => {
-    setQuestion({
-      ...question,
-      options: question.options.map((option, index) => {
+    setCurrQuestion({
+      ...currQuestion,
+      options: currQuestion.options.map((option, index) => {
         if (index === changeIndex) {
           return value;
         }
@@ -31,16 +46,79 @@ const Sidebar = (props) => {
     });
   };
   useEffect(() => {
-    if (question.question_type === question_types.MCQ) {
+    if (currQuestion.question_type === question_types.MCQ) {
       setQuestionState("options", ["", "", "", ""]);
-    } else if (question.question_type === question_types.BOOLEAN) {
+    } else if (currQuestion.question_type === question_types.BOOLEAN) {
       setQuestionState("options", ["TRUE", "FALSE"]);
-    } else if (question.question_type === question_types.POLL) {
+    } else if (currQuestion.question_type === question_types.POLL) {
       setQuestionState("options", ["", ""]);
       setQuestionState("answerIndex", null);
     }
-  }, [question.question_type]);
+  }, [currQuestion.question_type]);
+  useEffect(() => {
+    const checkAllOptionsFilled = () => {
+      let flag = true;
+      currQuestion.options.forEach((option) => {
+        if (!option.length) {
+          flag = false;
+        }
+      });
+      return flag;
+    };
 
+    setAllOptionsFilled(checkAllOptionsFilled());
+  }, [currQuestion.options]);
+  useEffect(() => {
+    if (currQuestion.question.length <= 0) {
+      setErrors({ ...errors, question: true });
+    } else {
+      setErrors({ ...errors, question: false });
+    }
+  }, [currQuestion.question]);
+  useEffect(() => {
+    setErrors({ ...errors, question: false });
+  }, []);
+  useEffect(() => {
+    const checkAllOptionsFilled = () => {
+      let flag = true;
+      currQuestion.options.forEach((option) => {
+        if (!option.length) {
+          flag = false;
+        }
+      });
+      return flag;
+    };
+
+    setAllOptionsFilled(checkAllOptionsFilled());
+  }, [currQuestion.options]);
+  const actionBtn = () => {
+    if (errors.question) {
+      toast.error("Please enter a valid question");
+      return;
+    } else if (!allOptionsFilled) {
+      toast.error("Please fill all options");
+      return;
+    } else if (
+      !currQuestion.answerIndex &&
+      currQuestion.answerIndex !== 0 &&
+      !currQuestion.question_type === question_types.POLL
+    ) {
+      toast.error("Please select a correct answer");
+      return;
+    } else if (hasDuplicateStrings(currQuestion.options)) {
+      toast.error("Options cannot be same");
+      return;
+    }
+    if (updateQuesIndex === -1) {
+      addQuestion(currQuestion);
+    } else {
+      updateQues(currQuestion, updateQuesIndex);
+    }
+  };
+  function hasDuplicateStrings(arr) {
+    const uniqueSet = new Set(arr);
+    return uniqueSet.size !== arr.length;
+  }
   return (
     <div className="w-full flex  flex-col gap-6 justify-start max-w-full scroll-smooth">
       <h1 className="bg-green w-max px-2 font-medium text-5xl text-start">
@@ -50,69 +128,111 @@ const Sidebar = (props) => {
       </h1>
       <h2 className="text-3xl text-start font-medium">Question type</h2>
       <Select
-        value={question.question_type}
+        value={currQuestion.question_type}
         className="w-[280px]  text-start p-2 px-4 shadow-lg"
         onChange={(_, newValue) => setQuestionState("question_type", newValue)}
       >
-        <div className="container w-[280px] bg-white cursor-pointer shadow-lg p-4">
-          <Option value={question_types.MCQ}>MCQ</Option>
-          <Option value={question_types.BOOLEAN}>True/False</Option>
-          <Option value={question_types.POLL}>Poll</Option>
+        <div className="container w-[280px] bg-white cursor-pointer shadow-lg py-4 px-0 ">
+          {(!isPoll ||
+            firstQues ||
+            currQuestion.question_type !== question_types.POLL) && (
+            <>
+              <Option
+                className="hover:bg-slate-200 pl-4"
+                value={question_types.MCQ}
+              >
+                MCQ
+              </Option>
+              <Option
+                className="hover:bg-slate-200 pl-4"
+                value={question_types.BOOLEAN}
+              >
+                True/False
+              </Option>
+            </>
+          )}
+          {(isPoll || firstQues) && (
+            <Option
+              className="hover:bg-slate-200 pl-4"
+              value={question_types.POLL}
+            >
+              Poll
+            </Option>
+          )}
         </div>
       </Select>
       <h3 className="text-xl text-start">Question</h3>
-      <Input
-        value={question.question}
-        className="shadow-lg p-0 h-10 w-2/3"
-        slotProps={{
-          input: {
-            className:
-              "w-full text-sm font-sans  font-normal leading-5 p-4  m-0 rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0",
-          },
-        }}
-        aria-label="Question"
-        placeholder="Enter your question"
-        onChange={(e) => setQuestionState("question", e.target.value)}
-      />
+      <span>
+        <Input
+          value={currQuestion.question}
+          className={`shadow-lg p-0 h-10 w-2/3 `}
+          slotProps={{
+            input: {
+              className: `w-full text-sm font-sans  font-normal leading-5 p-4  m-0
+               rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
+               ${errors.question && "border border-error"}`,
+            },
+          }}
+          aria-label="Question"
+          placeholder="Enter your question"
+          onChange={(e) => setQuestionState("question", e.target.value)}
+        />
+        {/* {errors.question && (
+          <p className="text-start text-error mt-3">Please enter Question</p>
+        )} */}
+      </span>
       <h3 className="text-xl text-start my-4">Enter your answers</h3>
       <div className=" grid grid-cols-2 gap-4">
-        {question.options.map((option, index) => (
+        {currQuestion.options.map((option, index) => (
           <OptionComponent
             key={index}
             option={option}
+            error={option.length <= 0}
             onChange={(val) => setOptions(val, index)}
             // isCorrect={
-            //   question.question_type !== question_types.POLL &&
-            //   index === question.answerIndex
+            //   currQuestion.question_type !== question_types.POLL &&
+            //   index === currQuestion.answerIndex
             //     ? true
             //     : false
             // }
             // onClick={() =>
-            //   question.question_type !== question_types.POLL &&
+            //   currQuestion.question_type !== question_types.POLL &&
             //   setQuestionState("answerIndex", index)
             // }
           />
         ))}
       </div>
       <div className="flex gap-4 flex-wrap flex-row justify-between items-center  my-4">
-        <h3 className="text-xl text-start ">Correct Answer:</h3>
-        <Select
-          value={question.answerIndex}
-          placeholder={"Please Select"}
-          className="w-[200px] max-w-[200px] text-start p-2 px-4 shadow-lg"
-          onChange={(_, newValue) => setQuestionState("answerIndex", newValue)}
-        >
-          <div className="container w-[200px] bg-white cursor-pointer shadow-lg p-4">
-            {question.options.map((option, index) => (
-              <Option value={index}>{option}</Option>
-            ))}
-          </div>
-        </Select>
+        {currQuestion.question_type !== question_types.POLL && (
+          <>
+            <h3 className="text-xl text-start ">Correct Answer:</h3>
+            <Select
+              value={currQuestion.answerIndex}
+              placeholder={"Please Select"}
+              disabled={!allOptionsFilled}
+              className={`w-[200px] max-w-[200px] text-start p-2 px-4 shadow-lg ${
+                !allOptionsFilled
+                  ? "cursor-not-allowed border border-error"
+                  : ""
+              }`}
+              onChange={(_, newValue) =>
+                setQuestionState("answerIndex", newValue)
+              }
+            >
+              <div className="container w-[200px] bg-white cursor-pointer shadow-lg p-4">
+                {currQuestion.options.map((option, index) => (
+                  <Option value={index}>{option}</Option>
+                ))}
+              </div>
+            </Select>
+          </>
+        )}
         <Button
-          onClick={() => addQuestion(question)}
-          className="border border-black p-2"
+          onClick={actionBtn}
+          // disabled={!allOptionsFilled}
+          className={"border border-black p-2"}
         >
-          Add Question
+          {updateQuesIndex === -1 ? "Add Question" : "Update Question"}
         </Button>
       </div>
     </div>

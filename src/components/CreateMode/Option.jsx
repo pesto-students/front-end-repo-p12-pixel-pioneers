@@ -1,8 +1,9 @@
 import { Input } from "@mui/base";
 import React from "react";
 
-const Option = ({ option, onChange, onClick, isCorrect }) => {
+const Option = ({ option, onChange, onClick, isCorrect, error }) => {
   //   console.log({ option, isCorrect }, "option");
+
   return (
     <Input
       value={option}
@@ -12,7 +13,9 @@ const Option = ({ option, onChange, onClick, isCorrect }) => {
         input: {
           className: `w-full text-sm ${
             isCorrect && "bg-green"
-          } font-sans h-10 box-border p-2  font-normal leading-5 m-0 rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0`,
+          } font-sans h-10 box-border p-2  font-normal leading-5 
+          m-0 rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
+          ${error && "border border-error"}`,
         },
       }}
       aria-label="Question"

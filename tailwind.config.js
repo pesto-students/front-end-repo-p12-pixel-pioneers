@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         green: "#B9FF66",
+        error: "rgb(239, 68 ,68 )",
       },
     },
   },
