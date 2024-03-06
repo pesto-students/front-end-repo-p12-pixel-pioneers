@@ -119,6 +119,7 @@ const Sidebar = (props) => {
     const uniqueSet = new Set(arr);
     return uniqueSet.size !== arr.length;
   }
+  console.log(errors, "errors");
   return (
     <div className="w-full flex  flex-col gap-6 justify-start max-w-full scroll-smooth">
       <h1 className="bg-green w-max px-2 font-medium text-5xl text-start">
@@ -174,6 +175,10 @@ const Sidebar = (props) => {
             },
           }}
           aria-label="Question"
+          onBlur={() =>
+            currQuestion.question.length <= 0 &&
+            setErrors({ ...errors, question: true })
+          }
           placeholder="Enter your question"
           onChange={(e) => setQuestionState("question", e.target.value)}
         />
