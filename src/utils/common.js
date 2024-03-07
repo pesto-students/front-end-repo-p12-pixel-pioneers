@@ -17,3 +17,11 @@ export const request = (url, options) => {
     .then((json) => json)
     .catch((err) => ({ err }));
 };
+export const replaceInString = (string, values) => {
+  // Iterate through the keys in the values object
+  for (const key in values) {
+    // Replace all occurrences of the key (wrapped in ":") with the corresponding value
+    string = string.replace(`:${key}`, values[key]);
+  }
+  return string;
+};
