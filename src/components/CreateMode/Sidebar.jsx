@@ -19,7 +19,7 @@ const Sidebar = (props) => {
   const [allOptionsFilled, setAllOptionsFilled] = useState(false);
   const [errors, setErrors] = useState({
     question: false,
-    options: false,
+    options: [],
   });
 
   // const [question, setQuestion] = useState({
@@ -46,15 +46,21 @@ const Sidebar = (props) => {
     });
   };
   useEffect(() => {
+    setOptionErrors();
+  }, [currQuestion.question_type]);
+  const setOptionErrors = () => {
     if (currQuestion.question_type === question_types.MCQ) {
       setQuestionState("options", ["", "", "", ""]);
+      setErrors({ ...errors, options: [false, false, false, false] });
     } else if (currQuestion.question_type === question_types.BOOLEAN) {
       setQuestionState("options", ["TRUE", "FALSE"]);
+      setErrors({ ...errors, options: [false, false] });
     } else if (currQuestion.question_type === question_types.POLL) {
       setQuestionState("options", ["", ""]);
       setQuestionState("answerIndex", null);
+      setErrors({ ...errors, options: [false, false] });
     }
-  }, [currQuestion.question_type]);
+  };
   useEffect(() => {
     const checkAllOptionsFilled = () => {
       let flag = true;
@@ -77,6 +83,7 @@ const Sidebar = (props) => {
   }, [currQuestion.question]);
   useEffect(() => {
     setErrors({ ...errors, question: false });
+    setOptionErrors();
   }, []);
   useEffect(() => {
     const checkAllOptionsFilled = () => {
@@ -92,18 +99,28 @@ const Sidebar = (props) => {
     setAllOptionsFilled(checkAllOptionsFilled());
   }, [currQuestion.options]);
   const actionBtn = () => {
-    if (errors.question) {
+    if (errors.question || currQuestion.question.length <= 0) {
       toast.error("Please enter a valid question");
+      if (currQuestion.question.length <= 0) {
+        setErrors({ ...errors, question: true });
+      }
       return;
     } else if (!allOptionsFilled) {
       toast.error("Please fill all options");
+      setErrors({
+        ...errors,
+        options: errors.options.map((opt, index) =>
+          currQuestion.options[index].length <= 0 ? true : false
+        ),
+      });
       return;
     } else if (
       !currQuestion.answerIndex &&
-      currQuestion.answerIndex !== 0 &&
-      !currQuestion.question_type === question_types.POLL
+      currQuestion.answerIndex !== 0
+      // !currQuestion.question_type === question_types.POLL
     ) {
-      toast.error("Please select a correct answer");
+      if (currQuestion.question_type !== question_types.POLL)
+        toast.error("Please select a correct answer");
       return;
     } else if (hasDuplicateStrings(currQuestion.options)) {
       toast.error("Options cannot be same");
@@ -114,12 +131,17 @@ const Sidebar = (props) => {
     } else {
       updateQues(currQuestion, updateQuesIndex);
     }
+    setErrors({
+      ...errors,
+      options: errors.options.map((item) => false),
+      question: false,
+    });
   };
   function hasDuplicateStrings(arr) {
     const uniqueSet = new Set(arr);
     return uniqueSet.size !== arr.length;
   }
-  console.log(errors, "errors");
+  console.log(currQuestion, "currQuestion");
   return (
     <div className="w-full flex  flex-col gap-6 justify-start max-w-full scroll-smooth">
       <h1 className="bg-green w-max px-2 font-medium text-5xl text-start">
@@ -192,7 +214,23 @@ const Sidebar = (props) => {
           <OptionComponent
             key={index}
             option={option}
-            error={option.length <= 0}
+            error={errors.options[index]}
+            onBlur={() =>
+              setErrors({
+                ...errors,
+                options: errors.options.map((opt, ind) => {
+                  console.log({ opt, option, ind, index }, "opt");
+                  if (ind === index) {
+                    if (option.length <= 0) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }
+                  return opt;
+                }),
+              })
+            }
             onChange={(val) => setOptions(val, index)}
             // isCorrect={
             //   currQuestion.question_type !== question_types.POLL &&
@@ -207,6 +245,21 @@ const Sidebar = (props) => {
           />
         ))}
       </div>
+      <div className="flex gap-4 flex-wrap flex-row justify-start items-center  my-4">
+        <input
+          type="checkbox"
+          name="persist_question"
+          className="form-checkbox h-4 w-4 "
+          checked={currQuestion.save}
+          slotProps={{
+            input: {
+              className: "",
+            },
+          }}
+          onChange={(e) => setQuestionState("save", e.target.checked)}
+        />
+        <h3 className="text-xl text-start ">Add question to question bank</h3>
+      </div>
       <div className="flex gap-4 flex-wrap flex-row justify-between items-center  my-4">
         {currQuestion.question_type !== question_types.POLL && (
           <>
@@ -215,11 +268,13 @@ const Sidebar = (props) => {
               value={currQuestion.answerIndex}
               placeholder={"Please Select"}
               disabled={!allOptionsFilled}
+              // onBlur={()=>}
               className={`w-[200px] max-w-[200px] text-start p-2 px-4 shadow-lg ${
                 !allOptionsFilled
                   ? "cursor-not-allowed border border-error"
                   : ""
-              }`}
+              }
+              `}
               onChange={(_, newValue) =>
                 setQuestionState("answerIndex", newValue)
               }

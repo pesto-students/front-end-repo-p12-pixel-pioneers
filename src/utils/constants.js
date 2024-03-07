@@ -10,6 +10,7 @@ export const APP_ROUTES = {
   FORGOT_PASSWORD: "/forgotpassword",
   ONBOARDING: "/onboarding",
   HOME: "/",
+  VIEW_QUIZ_ANALYTICS: "/analytics/quiz/:id",
   MANUAL_MODE: "/create-manual",
 };
 

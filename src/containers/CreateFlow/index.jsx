@@ -15,6 +15,7 @@ const CreateFlow = (props) => {
     question_type: question_types.MCQ,
     question: "",
     options: [],
+    save: false,
     answerIndex: null,
   };
   const [currQuestion, setCurrQuestion] = useState(initQuestion);

@@ -1,14 +1,15 @@
 import { Input } from "@mui/base";
 import React from "react";
 
-const Option = ({ option, onChange, onClick, isCorrect, error }) => {
-  //   console.log({ option, isCorrect }, "option");
+const Option = ({ option, onChange, onClick, isCorrect, error, onBlur }) => {
+  // console.log(error, "option");
 
   return (
     <Input
       value={option}
       //   onClick={onClick}
       className={`shadow-lg  box-border  h-10 `}
+      onBlur={onBlur}
       slotProps={{
         input: {
           className: `w-full text-sm ${

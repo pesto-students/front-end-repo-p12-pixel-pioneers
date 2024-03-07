@@ -1,0 +1,5 @@
+[
+  { "key": "user1@example.com", "correctAnswers": 1, "wrongAnswers": 2 },
+  { "key": "user2@example.com", "correctAnswers": 2, "wrongAnswers": 1 },
+  { "key": "user3@example.com", "correctAnswers": 0, "wrongAnswers": 3 }
+]
