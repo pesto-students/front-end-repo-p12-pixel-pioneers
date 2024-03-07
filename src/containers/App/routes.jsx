@@ -47,6 +47,12 @@ const allRoutes = [
     properties: { renderPath: APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ },
     component: Analytics,
   },
+  {
+    path: APP_ROUTES.QUIZZES,
+    isProtected: false,
+    properties: { renderPath: APP_ROUTES.QUIZZES },
+    component: Analytics,
+  },
 ];
 const PrivateRoutes = (props) => {
   console.log(props, "PrivateRoutes");

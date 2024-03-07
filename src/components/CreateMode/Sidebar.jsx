@@ -119,9 +119,10 @@ const Sidebar = (props) => {
       currQuestion.answerIndex !== 0
       // !currQuestion.question_type === question_types.POLL
     ) {
-      if (currQuestion.question_type !== question_types.POLL)
+      if (currQuestion.question_type !== question_types.POLL) {
         toast.error("Please select a correct answer");
-      return;
+        return;
+      }
     } else if (hasDuplicateStrings(currQuestion.options)) {
       toast.error("Options cannot be same");
       return;

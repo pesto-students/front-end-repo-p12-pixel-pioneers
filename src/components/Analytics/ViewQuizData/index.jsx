@@ -6,6 +6,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { APP_ROUTES, replaceInString } from "../../../utils";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import PageTitle from "../../PageTitle";
 // import { getQuizDataAction } from "../../redux/actions";
 const ViewQuizData = (props) => {
   const params = useParams();
@@ -43,10 +44,8 @@ const ViewQuizData = (props) => {
     };
   }, []);
   return (
-    <div>
-      <h1 className="text-3xl pl-2 pr-4 mr-auto table bg-green leading-10  font-medium mb-16 text-start">
-        Quiz Results :
-      </h1>
+    <div className="pb-16">
+      <PageTitle text={`Quiz Results :`} />
       <section className="my-8">
         <Pie className="!h-[500px] !w-[500px]" data={resultPercentageData} />
       </section>
@@ -55,25 +54,25 @@ const ViewQuizData = (props) => {
           <tr>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
             >
               User
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
             >
               Correct Answers
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
             >
               Wrong Answers
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
             >
               Link
             </th>

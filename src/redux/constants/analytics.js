@@ -2,3 +2,15 @@ export const GET_QUIZ_DATA_LOADING = "app/analytics/GET_QUIZ_DATA_LOADING";
 export const GET_QUIZ_DATA_ERROR = "app/analytics/GET_QUIZ_DATA_ERROR";
 export const GET_QUIZ_DATA_SUCCESS = "app/analytics/GET_QUIZ_DATA_SUCCESS";
 export const GET_QUIZ_DATA_RESET = "app/analytics/GET_QUIZ_DATA_RESET";
+export const GET_ALL_QUIZZES_LOADING = "app/analytics/GET_ALL_QUIZZES_LOADING";
+export const GET_ALL_QUIZZES_ERROR = "app/analytics/GET_ALL_QUIZZES_ERROR";
+export const GET_ALL_QUIZZES_SUCCESS = "app/analytics/GET_ALL_QUIZZES_SUCCESS";
+export const GET_ALL_QUIZZES_RESET = "app/analytics/GET_ALL_QUIZZES_RESET";
+export const GET_USER_ANALYTICS_PER_QUIZ_LOADING =
+  "app/analytics/GET_USER_ANALYTICS_PER_QUIZ_LOADING";
+export const GET_USER_ANALYTICS_PER_QUIZ_ERROR =
+  "app/analytics/GET_USER_ANALYTICS_PER_QUIZ_ERROR";
+export const GET_USER_ANALYTICS_PER_QUIZ_SUCCESS =
+  "app/analytics/GET_USER_ANALYTICS_PER_QUIZ_SUCCESS";
+export const GET_USER_ANALYTICS_PER_QUIZ_RESET =
+  "app/analytics/GET_USER_ANALYTICS_PER_QUIZ_RESET";

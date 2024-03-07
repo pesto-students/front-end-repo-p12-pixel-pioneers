@@ -5,6 +5,7 @@ import { getQuizDataAction } from "../../redux/actions";
 import ViewQuizData from "../../components/Analytics/ViewQuizData";
 import { APP_ROUTES } from "../../utils";
 import UserAnalyticsPerQuiz from "../../components/Analytics/UserAnalyticsPerQuiz";
+import AllQuizzes from "../../components/Analytics/AllQuizzes";
 
 const Analytics = (props) => {
   const { renderPath } = props;
@@ -21,6 +22,7 @@ const Analytics = (props) => {
   return (
     <div className="container mt-10 h-[86vh] py-4  box-border">
       {renderPath === APP_ROUTES.VIEW_QUIZ_ANALYTICS && <ViewQuizData />}
+      {renderPath === APP_ROUTES.QUIZZES && <AllQuizzes />}
       {renderPath === APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ && (
         <UserAnalyticsPerQuiz />
       )}
