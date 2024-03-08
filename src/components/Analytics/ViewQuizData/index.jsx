@@ -35,7 +35,7 @@ const ViewQuizData = (props) => {
   };
   useEffect(() => {
     if (params?.id) {
-      dispatch(getQuizDataAction());
+      dispatch(getQuizDataAction({ id: params.id }));
     }
   }, [params]);
   useEffect(() => {
