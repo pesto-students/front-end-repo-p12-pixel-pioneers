@@ -1,4 +1,4 @@
-import { request } from "../../utils";
+import { DOMAIN, request } from "../../utils";
 
 export const Quiz_Services = {
   create: async (data) => {
@@ -9,11 +9,8 @@ export const Quiz_Services = {
         "Content-type": "application/json; charset=UTF-8",
       },
     };
-    // console.log(1234);
-    const res = await request(
-      "https://quizzify-1.onrender.com/api/quizs",
-      options
-    );
+    console.log(1234);
+    const res = await request(`${DOMAIN}/quizs`, options);
     return res;
   },
 };

@@ -1,6 +1,8 @@
 import { Button, Input } from "@mui/base";
 import React from "react";
 import RenderQuestion from "./RenderQuestion";
+import { useSelector } from "react-redux";
+import { API_CONSTANTS } from "../../utils";
 
 const QuestionsList = (props) => {
   const {
@@ -11,6 +13,8 @@ const QuestionsList = (props) => {
     quizName,
     setQuizName,
   } = props;
+
+  const quizSelector = useSelector((state) => state.quiz.quiz);
   return (
     <>
       <div className="flex flex-row justify-between">
@@ -30,9 +34,15 @@ const QuestionsList = (props) => {
         />
         <Button
           onClick={createQuiz}
-          className="py-1 px-4 border rounded-sm border-black border-1"
+          className="py-1 px-4 flex min-w-24 items-center justify-center border rounded-sm relative border-black border-1"
         >
-          Save Quiz
+          {quizSelector.status === API_CONSTANTS.loading ? (
+            <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark">
+              <span class="sr-only">Loading...</span>
+            </div>
+          ) : (
+            " Save Quiz"
+          )}
         </Button>
       </div>
       <h1 className="text-3xl my-8 text-start font-medium">Questions </h1>

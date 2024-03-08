@@ -5,6 +5,7 @@ import { question_types } from "./constants";
 import { Option, Select, Input, Button } from "@mui/base";
 import OptionComponent from "./Option";
 import { toast } from "react-toastify";
+import PageTitle from "../PageTitle";
 const Sidebar = (props) => {
   const location = useLocation();
   const {
@@ -26,7 +27,7 @@ const Sidebar = (props) => {
   //   question_type: question_types.MCQ,
   //   question: "",
   //   options: [],
-  //   answerIndex: null,
+  //   correct_answer: null,
   // });
   const setQuestionState = (key, value) => {
     setCurrQuestion({
@@ -57,33 +58,33 @@ const Sidebar = (props) => {
       setErrors({ ...errors, options: [false, false] });
     } else if (currQuestion.question_type === question_types.POLL) {
       setQuestionState("options", ["", ""]);
-      setQuestionState("answerIndex", null);
+      setQuestionState("correct_answer", null);
       setErrors({ ...errors, options: [false, false] });
     }
   };
-  useEffect(() => {
-    const checkAllOptionsFilled = () => {
-      let flag = true;
-      currQuestion.options.forEach((option) => {
-        if (!option.length) {
-          flag = false;
-        }
-      });
-      return flag;
-    };
+  // useEffect(() => {
+  //   const checkAllOptionsFilled = () => {
+  //     let flag = true;
+  //     currQuestion.options.forEach((option) => {
+  //       if (!option.length) {
+  //         flag = false;
+  //       }
+  //     });
+  //     return flag;
+  //   };
 
-    setAllOptionsFilled(checkAllOptionsFilled());
-  }, [currQuestion.options]);
+  //   setAllOptionsFilled(checkAllOptionsFilled());
+  // }, [currQuestion.options]);
+  // useEffect(() => {
+  //   if (currQuestion.question.length <= 0) {
+  //     setErrors({ ...errors, question: true });
+  //   } else {
+  //     setErrors({ ...errors, question: false });
+  //   }
+  // }, [currQuestion.question]);
   useEffect(() => {
-    if (currQuestion.question.length <= 0) {
-      setErrors({ ...errors, question: true });
-    } else {
-      setErrors({ ...errors, question: false });
-    }
-  }, [currQuestion.question]);
-  useEffect(() => {
-    setErrors({ ...errors, question: false });
-    setOptionErrors();
+    // setErrors({ ...errors, question: false });
+    // setOptionErrors();
   }, []);
   useEffect(() => {
     const checkAllOptionsFilled = () => {
@@ -99,24 +100,23 @@ const Sidebar = (props) => {
     setAllOptionsFilled(checkAllOptionsFilled());
   }, [currQuestion.options]);
   const actionBtn = () => {
-    if (errors.question || currQuestion.question.length <= 0) {
+    if (currQuestion.question.length <= 0) {
       toast.error("Please enter a valid question");
-      if (currQuestion.question.length <= 0) {
-        setErrors({ ...errors, question: true });
-      }
+      setErrors({ ...errors, question: true });
       return;
     } else if (!allOptionsFilled) {
       toast.error("Please fill all options");
       setErrors({
         ...errors,
+        question: false,
         options: errors.options.map((opt, index) =>
           currQuestion.options[index].length <= 0 ? true : false
         ),
       });
       return;
     } else if (
-      !currQuestion.answerIndex &&
-      currQuestion.answerIndex !== 0
+      !currQuestion.correct_answer &&
+      currQuestion.correct_answer !== 0
       // !currQuestion.question_type === question_types.POLL
     ) {
       if (currQuestion.question_type !== question_types.POLL) {
@@ -125,6 +125,14 @@ const Sidebar = (props) => {
       }
     } else if (hasDuplicateStrings(currQuestion.options)) {
       toast.error("Options cannot be same");
+      const arr = findIdenticalIds(currQuestion.options);
+      setErrors({
+        ...errors,
+        options: errors.options.map((item, index) =>
+          arr.includes(index) ? true : false
+        ),
+        question: false,
+      });
       return;
     }
     if (updateQuesIndex === -1) {
@@ -138,18 +146,45 @@ const Sidebar = (props) => {
       question: false,
     });
   };
+  function findIdenticalIds(strings) {
+    const idMap = new Map();
+
+    // Iterate over the strings array to map each string to its index
+    strings.forEach((str, index) => {
+      if (!idMap.has(str)) {
+        idMap.set(str, [index]);
+      } else {
+        idMap.get(str).push(index);
+      }
+    });
+
+    // Filter out the IDs of identical strings
+    const identicalIds = Array.from(idMap.values()).filter(
+      (ids) => ids.length > 1
+    );
+
+    // Flatten the array of IDs
+    return identicalIds.flat();
+  }
   function hasDuplicateStrings(arr) {
     const uniqueSet = new Set(arr);
     return uniqueSet.size !== arr.length;
   }
-  console.log(currQuestion, "currQuestion");
+  console.log(errors, "errors");
   return (
     <div className="w-full flex  flex-col gap-6 justify-start max-w-full scroll-smooth">
-      <h1 className="bg-green w-max px-2 font-medium text-5xl text-start">
+      {/* <h1 className="bg-green w-max px-2 font-medium text-5xl text-start">
         {location.pathname === APP_ROUTES.MANUAL_MODE
           ? "Manual Mode"
           : "AI Mode"}
-      </h1>
+      </h1> */}
+      <PageTitle
+        text={
+          location.pathname === APP_ROUTES.MANUAL_MODE
+            ? "Manual Mode"
+            : "AI Mode"
+        }
+      />
       <h2 className="text-3xl text-start font-medium">Question type</h2>
       <Select
         value={currQuestion.question_type}
@@ -198,10 +233,10 @@ const Sidebar = (props) => {
             },
           }}
           aria-label="Question"
-          onBlur={() =>
-            currQuestion.question.length <= 0 &&
-            setErrors({ ...errors, question: true })
-          }
+          // onBlur={() =>
+          //   currQuestion.question.length <= 0 &&
+          //   setErrors({ ...errors, question: true })
+          // }
           placeholder="Enter your question"
           onChange={(e) => setQuestionState("question", e.target.value)}
         />
@@ -216,32 +251,32 @@ const Sidebar = (props) => {
             key={index}
             option={option}
             error={errors.options[index]}
-            onBlur={() =>
-              setErrors({
-                ...errors,
-                options: errors.options.map((opt, ind) => {
-                  console.log({ opt, option, ind, index }, "opt");
-                  if (ind === index) {
-                    if (option.length <= 0) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  }
-                  return opt;
-                }),
-              })
-            }
+            // onBlur={() =>
+            //   setErrors({
+            //     ...errors,
+            //     options: errors.options.map((opt, ind) => {
+            //       console.log({ opt, option, ind, index }, "opt");
+            //       if (ind === index) {
+            //         if (option.length <= 0) {
+            //           return true;
+            //         } else {
+            //           return false;
+            //         }
+            //       }
+            //       return opt;
+            //     }),
+            //   })
+            // }
             onChange={(val) => setOptions(val, index)}
             // isCorrect={
             //   currQuestion.question_type !== question_types.POLL &&
-            //   index === currQuestion.answerIndex
+            //   index === currQuestion.correct_answer
             //     ? true
             //     : false
             // }
             // onClick={() =>
             //   currQuestion.question_type !== question_types.POLL &&
-            //   setQuestionState("answerIndex", index)
+            //   setQuestionState("correct_answer", index)
             // }
           />
         ))}
@@ -266,7 +301,7 @@ const Sidebar = (props) => {
           <>
             <h3 className="text-xl text-start ">Correct Answer:</h3>
             <Select
-              value={currQuestion.answerIndex}
+              value={currQuestion.correct_answer}
               placeholder={"Please Select"}
               disabled={!allOptionsFilled}
               // onBlur={()=>}
@@ -277,7 +312,7 @@ const Sidebar = (props) => {
               }
               `}
               onChange={(_, newValue) =>
-                setQuestionState("answerIndex", newValue)
+                setQuestionState("correct_answer", newValue)
               }
             >
               <div className="container w-[200px] bg-white cursor-pointer shadow-lg p-4">

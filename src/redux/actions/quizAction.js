@@ -1,6 +1,7 @@
 import {
   CREATE_QUIZ_ERROR,
   CREATE_QUIZ_LOADING,
+  CREATE_QUIZ_RESET,
   CREATE_QUIZ_SUCCESS,
 } from "../constants";
 import { Quiz_Services } from "../services/quizServices";
@@ -16,5 +17,10 @@ export const createQuizAction = (data) => {
       .catch((error) => {
         dispatch(defaultDispatchAction(CREATE_QUIZ_ERROR, error));
       });
+  };
+};
+export const resetCreateQuizAction = () => {
+  return async (dispatch) => {
+    await dispatch(defaultDispatchAction(CREATE_QUIZ_RESET, {}));
   };
 };

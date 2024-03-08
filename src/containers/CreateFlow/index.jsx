@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/CreateMode/Sidebar";
 import Header from "../../components/Header";
 import QuestionsList from "../../components/CreateMode/QuestionsList";
 import { useDispatch, useSelector } from "react-redux";
-import { createQuizAction } from "../../redux/actions";
+import { createQuizAction, resetCreateQuizAction } from "../../redux/actions";
 import { question_types } from "../../components/CreateMode/constants";
+import { API_CONSTANTS, APP_ROUTES } from "../../utils";
+import { toast } from "react-toastify";
 
 const CreateFlow = (props) => {
   const location = useLocation();
@@ -17,7 +19,7 @@ const CreateFlow = (props) => {
     question: "",
     options: [],
     save: false,
-    answerIndex: null,
+    correct_answer: null,
   };
   const [currQuestion, setCurrQuestion] = useState(initQuestion);
   const addQuestion = (question) => {
@@ -31,39 +33,37 @@ const CreateFlow = (props) => {
 
   const quizSelector = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
-    dispatch(createQuizAction("data"));
+    return () => {
+      dispatch(resetCreateQuizAction());
+    };
   }, []);
-  console.log(quizSelector, "quizSelector");
-  console.log(questions, "questions");
+  useEffect(() => {
+    switch (quizSelector.quiz.status) {
+      case API_CONSTANTS.success:
+        toast.success("Quiz Created successfully");
+        navigate(APP_ROUTES.QUIZZES);
+        break;
+      case API_CONSTANTS.error:
+        toast.success("Quiz Created successfully");
+        break;
+
+      default:
+        break;
+    }
+  }, [quizSelector.quiz]);
+  // console.log(quizSelector, "quizSelector");
+  // console.log(questions, "questions");
   const createQuiz = () => {
+    if (questions.length <= 0) {
+      toast.error("Add atleast 1 question");
+      return;
+    }
     const data = {
-      id: "123e4567-e89b-12d3-a456-4266554403200",
-      title: "Sample Quiz",
+      title: quizName,
       status: "Active",
-      createdBy: "60f6c5d7a5d9c20015c7d5f1",
-      lastUpdatedBy: "60f6c5d7a5d9c20015c7d5f1",
-      persistQuestions: false,
-      questions: [
-        {
-          question_title: "What is the capital of France?",
-          options: ["Ketan", "London", "Berlin"],
-          correct_answer: "Ketan",
-          question_type: "mCQ",
-        },
-        {
-          question_title: "What is the largest planet in our solar system?",
-          options: ["Mars", "Jupiter", "Venus", "Saturn"],
-          correct_answer: "Jupiter",
-          question_type: "mCQ",
-        },
-        {
-          question_title: "Do you like this quiz?",
-          options: ["Yes", "No"],
-          correct_answer: "",
-          question_type: "poll",
-        },
-      ],
+      questions,
     };
 
     dispatch(createQuizAction(data));

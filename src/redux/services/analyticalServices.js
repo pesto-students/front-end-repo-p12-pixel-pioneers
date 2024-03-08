@@ -1,4 +1,4 @@
-import { DOMAIN, request } from "../../utils";
+import { DOMAIN, replaceInString, request } from "../../utils";
 
 export const Analytical_Services = {
   getQuizData: async (data) => {
@@ -18,13 +18,19 @@ export const Analytical_Services = {
   getUserQuizData: async (data) => {
     const options = {
       method: "GET",
-      body: JSON.stringify(data),
+      //   body: JSON.stringify(data),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     };
-    // console.log(1234);
-    const res = await request("/api/user_quiz_analytics.json", options);
+    console.log(data, "ketan");
+    const res = await request(
+      replaceInString(
+        `${DOMAIN}/analytics/quiz/:id/user/:user/answer-details`,
+        data
+      ),
+      options
+    );
     return res;
   },
   getAllQuizzes: async (data) => {
@@ -35,7 +41,6 @@ export const Analytical_Services = {
         "Content-type": "application/json; charset=UTF-8",
       },
     };
-    // console.log(1234);
     const res = await request(`${DOMAIN}/quizs/`, options);
     return res;
   },

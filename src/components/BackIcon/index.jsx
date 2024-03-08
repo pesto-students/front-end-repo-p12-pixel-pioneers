@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../../utils";
 const BackIcon = ({ className }) => {
   let navigate = useNavigate();
-  console.log(navigate);
+  //   console.log(navigate);
   const goBackOrRedirect = () => {
     if (window.history.length > 1) {
       window.history.back();

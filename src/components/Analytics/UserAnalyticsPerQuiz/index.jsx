@@ -158,7 +158,19 @@ const UserAnalyticsPerQuiz = (props) => {
               </th>
               <th
                 scope="col"
-                className="px-6 w-[15%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Submitted Answer
+              </th>
+              <th
+                scope="col"
+                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Correct Answer
+              </th>
+              <th
+                scope="col"
+                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
               >
                 Result
               </th>
@@ -169,6 +181,12 @@ const UserAnalyticsPerQuiz = (props) => {
               <tr key={row.id} className="hover:bg-gray-100">
                 <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
                   {row.question}
+                </td>
+                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
+                  {row.userAnswer}
+                </td>
+                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
+                  {row.correctAnswer}
                 </td>
                 <td className="px-6 uppercase font-medium py-4 border border-gray-300 whitespace-nowrap text-start">
                   {row.isCorrect ? "Correct ✅" : "Incorrect ❌"}

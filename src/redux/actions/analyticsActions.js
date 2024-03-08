@@ -43,7 +43,7 @@ export const getUserQuizDataAction = (data) => {
     await dispatch(
       defaultDispatchAction(GET_USER_ANALYTICS_PER_QUIZ_LOADING, data)
     );
-    await Analytical_Services.getUserQuizData()
+    await Analytical_Services.getUserQuizData(data)
       .then((result) => {
         dispatch(
           defaultDispatchAction(GET_USER_ANALYTICS_PER_QUIZ_SUCCESS, result)

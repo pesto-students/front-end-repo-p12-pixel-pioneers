@@ -24,7 +24,7 @@ const RenderQuestion = (props) => {
         {question.options.map((option, index) => (
           <RenderOption
             key={index}
-            isAnswer={question.answerIndex === index}
+            isAnswer={question.correct_answer === index}
             option={option}
           />
         ))}

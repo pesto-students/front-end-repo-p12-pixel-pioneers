@@ -2,6 +2,7 @@ import { API_CONSTANTS } from "../../utils";
 import {
   CREATE_QUIZ_ERROR,
   CREATE_QUIZ_LOADING,
+  CREATE_QUIZ_RESET,
   CREATE_QUIZ_SUCCESS,
 } from "../constants";
 const initState = {
@@ -34,6 +35,14 @@ const QuizReducer = (inititalState = initState, { type, payload }) => {
         ...inititalState,
         quiz: {
           status: API_CONSTANTS.error,
+          data: payload,
+        },
+      };
+    case CREATE_QUIZ_RESET:
+      return {
+        ...inititalState,
+        quiz: {
+          status: API_CONSTANTS.init,
           data: payload,
         },
       };
