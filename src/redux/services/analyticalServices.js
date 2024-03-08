@@ -1,5 +1,4 @@
-import axios from "axios";
-import { AUTH_TOKEN, request } from "../../utils";
+import { DOMAIN, request } from "../../utils";
 
 export const Analytical_Services = {
   getQuizData: async (data) => {
@@ -10,17 +9,8 @@ export const Analytical_Services = {
       },
     };
     // console.log(1234);
-    if (options.headers) {
-      Object.assign(options.headers, { Accept: "application/json" });
-      if (!options.headers.Authorization) {
-        options.headers.Authorization = `Bearer ${localStorage.getItem(
-          AUTH_TOKEN
-        )}`;
-      }
-    }
-
-    const res = axios.get(
-      `http://quizzify-4.onrender.com/api/analytics/quiz/${data.id}/answer-stats`,
+    const res = await request(
+      `${DOMAIN}/analytics/quiz/${data.id}/answer-stats`,
       options
     );
     return res;
@@ -46,7 +36,7 @@ export const Analytical_Services = {
       },
     };
     // console.log(1234);
-    const res = await request("/api/allQuizzes.json", options);
+    const res = await request(`${DOMAIN}/quizs/`, options);
     return res;
   },
 };

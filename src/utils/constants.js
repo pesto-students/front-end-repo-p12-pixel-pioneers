@@ -17,3 +17,4 @@ export const APP_ROUTES = {
 };
 
 export const AUTH_TOKEN = "authenticationToken";
+export const DOMAIN = "https://quizzify-4.onrender.com/api";
