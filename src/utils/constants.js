@@ -14,6 +14,7 @@ export const APP_ROUTES = {
   VIEW_QUIZ_ANALYTICS: "/analytics/quiz/:id",
   VIEW_USER_ANALYTICS_FOR_QUIZ: "/analytics/quiz/:id/users/:user",
   MANUAL_MODE: "/create-manual",
+  EDIT_QUIZ: "/edit-quiz/:id",
 };
 
 export const AUTH_TOKEN = "authenticationToken";

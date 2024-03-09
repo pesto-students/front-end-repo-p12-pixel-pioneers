@@ -7,7 +7,7 @@ import { API_CONSTANTS } from "../../utils";
 const QuestionsList = (props) => {
   const {
     questions,
-    createQuiz,
+    submitAction,
     deleteQues,
     editQuestion,
     quizName,
@@ -25,7 +25,7 @@ const QuestionsList = (props) => {
             input: {
               className: `w-full text-sm font-sans  font-normal leading-5 p-4  m-0
                rounded-lg border focus-visible:outline-0
-               ${quizName.length <= 0 && "border border-error"}`,
+               ${quizName?.length <= 0 && "border border-error"}`,
             },
           }}
           aria-label="Question"
@@ -33,7 +33,7 @@ const QuestionsList = (props) => {
           onChange={(e) => setQuizName(e.target.value)}
         />
         <Button
-          onClick={createQuiz}
+          onClick={() => submitAction()}
           className="py-1 px-4 flex min-w-24 items-center justify-center border rounded-sm relative border-black border-1"
         >
           {quizSelector.status === API_CONSTANTS.loading ? (

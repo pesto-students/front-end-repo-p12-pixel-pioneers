@@ -36,6 +36,12 @@ const allRoutes = [
     component: CreateFlow,
   },
   {
+    path: APP_ROUTES.EDIT_QUIZ,
+    isProtected: false,
+    properties: { mode: "edit" },
+    component: CreateFlow,
+  },
+  {
     path: APP_ROUTES.VIEW_QUIZ_ANALYTICS,
     isProtected: false,
     properties: { renderPath: APP_ROUTES.VIEW_QUIZ_ANALYTICS },

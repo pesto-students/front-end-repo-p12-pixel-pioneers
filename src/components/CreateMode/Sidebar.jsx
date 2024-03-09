@@ -100,7 +100,7 @@ const Sidebar = (props) => {
     setAllOptionsFilled(checkAllOptionsFilled());
   }, [currQuestion.options]);
   const actionBtn = () => {
-    if (currQuestion.question.length <= 0) {
+    if (currQuestion?.question?.length <= 0) {
       toast.error("Please enter a valid question");
       setErrors({ ...errors, question: true });
       return;
@@ -223,7 +223,7 @@ const Sidebar = (props) => {
       <h3 className="text-xl text-start">Question</h3>
       <span>
         <Input
-          value={currQuestion.question}
+          value={currQuestion.question_title}
           className={`shadow-lg p-0 h-10 w-2/3 `}
           slotProps={{
             input: {
@@ -238,7 +238,7 @@ const Sidebar = (props) => {
           //   setErrors({ ...errors, question: true })
           // }
           placeholder="Enter your question"
-          onChange={(e) => setQuestionState("question", e.target.value)}
+          onChange={(e) => setQuestionState("question_title", e.target.value)}
         />
         {/* {errors.question && (
           <p className="text-start text-error mt-3">Please enter Question</p>
