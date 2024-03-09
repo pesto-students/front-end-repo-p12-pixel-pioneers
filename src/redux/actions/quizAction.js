@@ -7,6 +7,10 @@ import {
   EDIT_QUIZ_LOADING,
   EDIT_QUIZ_RESET,
   EDIT_QUIZ_SUCCESS,
+  GET_RENDER_QUIZ_ERROR,
+  GET_RENDER_QUIZ_LOADING,
+  GET_RENDER_QUIZ_RESET,
+  GET_RENDER_QUIZ_SUCCESS,
   GET_WHOLE_QUIZ_ERROR,
   GET_WHOLE_QUIZ_LOADING,
   GET_WHOLE_QUIZ_RESET,
@@ -64,5 +68,22 @@ export const getWholeQuizAction = (data) => {
 export const resetGetWholeQuizAction = () => {
   return async (dispatch) => {
     await dispatch(defaultDispatchAction(GET_WHOLE_QUIZ_RESET, {}));
+  };
+};
+export const getRenderQuizAction = (data) => {
+  return async (dispatch) => {
+    await dispatch(defaultDispatchAction(GET_RENDER_QUIZ_LOADING, data));
+    await Quiz_Services.renderQuiz(data)
+      .then((result) => {
+        dispatch(defaultDispatchAction(GET_RENDER_QUIZ_SUCCESS, result));
+      })
+      .catch((error) => {
+        dispatch(defaultDispatchAction(GET_RENDER_QUIZ_ERROR, error));
+      });
+  };
+};
+export const resetGetRenderQuizAction = () => {
+  return async (dispatch) => {
+    await dispatch(defaultDispatchAction(GET_RENDER_QUIZ_RESET, {}));
   };
 };

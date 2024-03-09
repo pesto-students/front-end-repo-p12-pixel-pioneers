@@ -36,7 +36,21 @@ export const Quiz_Services = {
       },
     };
     console.log(data, "data3");
-    const res = await request(`${DOMAIN}/quizs/questions`, options);
+    const res = await request(
+      replaceInString(`${DOMAIN}/quizs/:id`, { id: data?.id }),
+      options
+    );
+    return res;
+  },
+  renderQuiz: async (data) => {
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    };
+    console.log(data, "data4");
+    const res = await request(`${DOMAIN}/quizs`, options);
     return res;
   },
 };

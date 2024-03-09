@@ -8,7 +8,7 @@ import {
   resetUserQuizDataAction,
 } from "../../../redux/actions";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { APP_ROUTES, replaceInString } from "../../../utils";
+import { API_CONSTANTS, APP_ROUTES, replaceInString } from "../../../utils";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,6 +20,7 @@ import {
 } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
 import PageTitle from "../../PageTitle";
+import ComponentLoader from "../../Loader/ComponentLoader";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -141,8 +142,10 @@ const UserAnalyticsPerQuiz = (props) => {
       //   },
     },
   };
-  return (
-    <div>
+  return quizData.status === API_CONSTANTS.loading ? (
+    <ComponentLoader />
+  ) : (
+    <>
       <PageTitle text={` Analytics for : ${user}`} />
       <section>
         {/* <Bar data={barchartData} options={options} /> */}
@@ -196,7 +199,7 @@ const UserAnalyticsPerQuiz = (props) => {
           </tbody>
         </table>
       </section>
-    </div>
+    </>
   );
 };
 

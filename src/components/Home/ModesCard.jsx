@@ -2,6 +2,7 @@ import { Button } from "@mui/base";
 import React from "react";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { APP_ROUTES } from "../../utils";
 
 const ModesCard = ({ mode }) => {
   const { title, description, link, btnText, icon } = mode;
@@ -61,9 +62,11 @@ const ModesCard = ({ mode }) => {
         <p className="font-normal text-xl  text-start py-1 px-2">
           {description}
         </p>
-        <Button className="py-4 px-6 mr-auto border rounded-2xl bg-black text-white ">
-          {btnText}
-        </Button>
+        <Link to={link}>
+          <Button className="py-4 px-6 mr-auto border rounded-2xl bg-black text-white ">
+            {btnText}
+          </Button>
+        </Link>
       </div>
       <div className="container relative">
         <img

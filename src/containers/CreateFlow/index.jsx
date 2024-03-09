@@ -13,8 +13,9 @@ import {
   resetGetWholeQuizAction,
 } from "../../redux/actions";
 import { question_types } from "../../components/CreateMode/constants";
-import { API_CONSTANTS, APP_ROUTES } from "../../utils";
+import { API_CONSTANTS, APP_ROUTES, replaceInString } from "../../utils";
 import { toast } from "react-toastify";
+import AttemptQuiz from "../../components/AttemptQuiz";
 
 const CreateFlow = (props) => {
   const { mode } = props;
@@ -22,6 +23,8 @@ const CreateFlow = (props) => {
   const params = useParams();
   const [questions, setQuestions] = useState([]);
   const [quizName, setQuizName] = useState("New Quiz");
+  const [modalTrigger, setModalTrigger] = useState(false);
+  const [generatedQuizId, setGeneratedQuizId] = useState(null);
   const [updateQuesIndex, setUpdateQuesIndex] = useState(-1);
   const initQuestion = {
     question_type: question_types.MCQ,
@@ -46,6 +49,7 @@ const CreateFlow = (props) => {
   }, [mode, params]);
 
   const quizSelector = useSelector((state) => state.quiz);
+  localStorage.setItem("redux", JSON.stringify(quizSelector));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,13 +57,16 @@ const CreateFlow = (props) => {
       dispatch(resetCreateQuizAction());
       dispatch(resetEditQuizAction());
       dispatch(resetGetWholeQuizAction());
+      setGeneratedQuizId(null);
     };
   }, []);
   useEffect(() => {
     switch (quizSelector.quiz.status) {
       case API_CONSTANTS.success:
         toast.success("Quiz Created successfully");
+        setGeneratedQuizId(quizSelector?.quiz?.data?._id);
         navigate(APP_ROUTES.QUIZZES);
+        // setModalTrigger(true);
         break;
       case API_CONSTANTS.error:
         toast.error("Error!!");
@@ -74,8 +81,7 @@ const CreateFlow = (props) => {
       case API_CONSTANTS.success:
         {
           setQuizName(quizSelector?.wholeQuiz?.data?.title);
-          console.log(quizSelector?.wholeQuiz?.data, "ketan");
-          setQuestions(quizSelector?.wholeQuiz?.data?.[0]?.questions);
+          setQuestions(quizSelector?.wholeQuiz?.data?.questions);
         }
         break;
       case API_CONSTANTS.error:
@@ -86,6 +92,22 @@ const CreateFlow = (props) => {
         break;
     }
   }, [quizSelector.wholeQuiz]);
+  useEffect(() => {
+    switch (quizSelector.editQuiz.status) {
+      case API_CONSTANTS.success:
+        {
+          toast.success("Changes saved successfully");
+          navigate(APP_ROUTES.QUIZZES);
+        }
+        break;
+      case API_CONSTANTS.error:
+        toast.error("Error!!");
+        break;
+
+      default:
+        break;
+    }
+  }, [quizSelector.editQuiz]);
   console.log(quizSelector, "quizSelector");
   console.log(questions, "questions");
   const createQuiz = () => {
@@ -107,7 +129,7 @@ const CreateFlow = (props) => {
       return;
     }
     const data = {
-      ...quizSelector.wholeQuiz.data[0],
+      ...quizSelector.wholeQuiz.data,
       title: quizName,
       questions,
     };
@@ -138,35 +160,44 @@ const CreateFlow = (props) => {
       return ["", ""];
     }
   };
+  console.log(generatedQuizId, "generatedQuizId");
   return (
     <>
-      <Header />
-      <div className="container mt-10 h-[86vh] py-4 flex flex-row gap-8 bg-green-300 box-border">
-        <div className="container w-1/2">
-          <Sidebar
-            currQuestion={currQuestion}
-            setCurrQuestion={setCurrQuestion}
-            addQuestion={addQuestion}
-            updateQuesIndex={updateQuesIndex}
-            isPoll={questions?.[0]?.question_type === question_types.POLL}
-            firstQues={questions.length === 0}
-            updateQues={updateQues}
-            {...props}
-          />
+      {mode === "attempt" ? (
+        <div className="container mt-10 h-[86vh] py-4 flex items-center overflow-hidden justify-center bg-green-300 box-border">
+          <AttemptQuiz />
         </div>
-        <div className=" w-1/2 overflow-y-auto py-3 box-border rounded-lg  shadow-lg pl-2">
-          {/* <Sidebar {...props} /> */}
-          <QuestionsList
-            submitAction={submitAction}
-            questions={questions}
-            quizName={quizName}
-            setQuizName={setQuizName}
-            deleteQues={deleteQues}
-            editQuestion={editQuestion}
-            {...props}
-          />
-        </div>
-      </div>
+      ) : (
+        <>
+          <Header />
+          <div className="container mt-10 h-[86vh] py-4 flex flex-row gap-8 bg-green-300 box-border">
+            <div className="container w-1/2">
+              <Sidebar
+                currQuestion={currQuestion}
+                setCurrQuestion={setCurrQuestion}
+                addQuestion={addQuestion}
+                updateQuesIndex={updateQuesIndex}
+                isPoll={questions?.[0]?.question_type === question_types.POLL}
+                firstQues={questions.length === 0}
+                updateQues={updateQues}
+                {...props}
+              />
+            </div>
+            <div className=" w-1/2 overflow-y-auto py-3 box-border rounded-lg  shadow-lg pl-2">
+              {/* <Sidebar {...props} /> */}
+              <QuestionsList
+                submitAction={submitAction}
+                questions={questions}
+                quizName={quizName}
+                setQuizName={setQuizName}
+                deleteQues={deleteQues}
+                editQuestion={editQuestion}
+                {...props}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

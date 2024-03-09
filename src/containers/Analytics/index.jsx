@@ -6,6 +6,8 @@ import ViewQuizData from "../../components/Analytics/ViewQuizData";
 import { APP_ROUTES } from "../../utils";
 import UserAnalyticsPerQuiz from "../../components/Analytics/UserAnalyticsPerQuiz";
 import AllQuizzes from "../../components/Analytics/AllQuizzes";
+import Header from "../../components/Header";
+import ComingSoon from "../../components/ComingSoon.jsx";
 
 const Analytics = (props) => {
   const { renderPath } = props;
@@ -19,10 +21,33 @@ const Analytics = (props) => {
   //       dispatch(getQuizDataAction());
   //     }
   //   }, [params]);
+  const links = [
+    {
+      text: "Manual Mode",
+      link: APP_ROUTES.MANUAL_MODE,
+    },
+    {
+      text: "AI Mode",
+      link: APP_ROUTES.AI_MODE,
+    },
+    // {
+    //   text: "Features",
+    //   link: APP_ROUTES.HOME,
+    // },
+    // {
+    //   text: "Features",
+    //   link: APP_ROUTES.HOME,
+    // },
+  ];
   return (
     <div className="container mt-10 h-[86vh] py-4  box-border">
+      <Header links={links} />
+      {/* <div className="flex mb-8 w-full h-[50px] border">
+
+      </div> */}
       {renderPath === APP_ROUTES.VIEW_QUIZ_ANALYTICS && <ViewQuizData />}
       {renderPath === APP_ROUTES.QUIZZES && <AllQuizzes />}
+      {renderPath === APP_ROUTES.AI_MODE && <ComingSoon />}
       {renderPath === APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ && (
         <UserAnalyticsPerQuiz />
       )}

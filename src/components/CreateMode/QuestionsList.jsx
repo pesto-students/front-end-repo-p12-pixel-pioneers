@@ -1,5 +1,5 @@
 import { Button, Input } from "@mui/base";
-import React from "react";
+import React, { useState } from "react";
 import RenderQuestion from "./RenderQuestion";
 import { useSelector } from "react-redux";
 import { API_CONSTANTS } from "../../utils";
@@ -15,6 +15,9 @@ const QuestionsList = (props) => {
   } = props;
 
   const quizSelector = useSelector((state) => state.quiz.quiz);
+  const editQuizSelector = useSelector((state) => state.quiz.editQuiz);
+  const [modalTrigger, setModalTrigger] = useState(true);
+  console.log(editQuizSelector, "editQuizSelector");
   return (
     <>
       <div className="flex flex-row justify-between">
@@ -36,7 +39,8 @@ const QuestionsList = (props) => {
           onClick={() => submitAction()}
           className="py-1 px-4 flex min-w-24 items-center justify-center border rounded-sm relative border-black border-1"
         >
-          {quizSelector.status === API_CONSTANTS.loading ? (
+          {quizSelector.status === API_CONSTANTS.loading ||
+          editQuizSelector.status === API_CONSTANTS.loading ? (
             <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark">
               <span class="sr-only">Loading...</span>
             </div>

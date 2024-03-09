@@ -36,9 +36,21 @@ const allRoutes = [
     component: CreateFlow,
   },
   {
+    path: APP_ROUTES.AI_MODE,
+    isProtected: false,
+    properties: { renderPath: APP_ROUTES.AI_MODE },
+    component: Analytics,
+  },
+  {
     path: APP_ROUTES.EDIT_QUIZ,
     isProtected: false,
     properties: { mode: "edit" },
+    component: CreateFlow,
+  },
+  {
+    path: APP_ROUTES.ATTEMPT_QUIZ,
+    isProtected: false,
+    properties: { mode: "attempt" },
     component: CreateFlow,
   },
   {

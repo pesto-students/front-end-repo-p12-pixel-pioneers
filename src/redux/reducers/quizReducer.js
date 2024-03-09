@@ -8,6 +8,10 @@ import {
   EDIT_QUIZ_LOADING,
   EDIT_QUIZ_RESET,
   EDIT_QUIZ_SUCCESS,
+  GET_ALL_QUIZZES_RESET,
+  GET_RENDER_QUIZ_ERROR,
+  GET_RENDER_QUIZ_LOADING,
+  GET_RENDER_QUIZ_SUCCESS,
   GET_WHOLE_QUIZ_ERROR,
   GET_WHOLE_QUIZ_LOADING,
   GET_WHOLE_QUIZ_RESET,
@@ -23,6 +27,10 @@ const initState = {
     status: null,
   },
   wholeQuiz: {
+    data: null,
+    status: null,
+  },
+  renderQuiz: {
     data: null,
     status: null,
   },
@@ -124,6 +132,39 @@ const QuizReducer = (inititalState = initState, { type, payload }) => {
       return {
         ...inititalState,
         wholeQuiz: {
+          status: API_CONSTANTS.init,
+          data: payload,
+        },
+      };
+    case GET_RENDER_QUIZ_LOADING:
+      return {
+        ...inititalState,
+        renderQuiz: {
+          status: API_CONSTANTS.loading,
+          data: null,
+        },
+      };
+
+    case GET_RENDER_QUIZ_SUCCESS:
+      return {
+        ...inititalState,
+        renderQuiz: {
+          status: API_CONSTANTS.success,
+          data: payload,
+        },
+      };
+    case GET_RENDER_QUIZ_ERROR:
+      return {
+        ...inititalState,
+        renderQuiz: {
+          status: API_CONSTANTS.error,
+          data: payload,
+        },
+      };
+    case GET_ALL_QUIZZES_RESET:
+      return {
+        ...inititalState,
+        renderQuiz: {
           status: API_CONSTANTS.init,
           data: payload,
         },

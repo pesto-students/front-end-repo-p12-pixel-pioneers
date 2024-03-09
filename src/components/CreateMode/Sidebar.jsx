@@ -15,6 +15,7 @@ const Sidebar = (props) => {
     updateQuesIndex,
     updateQues,
     isPoll,
+    mode,
     firstQues,
   } = props;
   const [allOptionsFilled, setAllOptionsFilled] = useState(false);
@@ -180,8 +181,10 @@ const Sidebar = (props) => {
       </h1> */}
       <PageTitle
         text={
-          location.pathname === APP_ROUTES.MANUAL_MODE
+          mode === "manual"
             ? "Manual Mode"
+            : mode === "edit"
+            ? "Edit quiz"
             : "AI Mode"
         }
       />
