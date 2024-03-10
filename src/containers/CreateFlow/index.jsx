@@ -160,7 +160,25 @@ const CreateFlow = (props) => {
       return ["", ""];
     }
   };
-  console.log(generatedQuizId, "generatedQuizId");
+  // console.log(generatedQuizId, "generatedQuizId");
+  const links = [
+    {
+      text: "Manual Mode",
+      link: APP_ROUTES.MANUAL_MODE,
+    },
+    {
+      text: "AI Mode",
+      link: APP_ROUTES.AI_MODE,
+    },
+    // {
+    //   text: "Features",
+    //   link: APP_ROUTES.HOME,
+    // },
+    // {
+    //   text: "Features",
+    //   link: APP_ROUTES.HOME,
+    // },
+  ];
   return (
     <>
       {mode === "attempt" ? (
@@ -169,7 +187,7 @@ const CreateFlow = (props) => {
         </div>
       ) : (
         <>
-          <Header />
+          <Header links={links} />
           <div className="container mt-10 h-[86vh] py-4 flex flex-row gap-8 bg-green-300 box-border">
             <div className="container w-1/2">
               <Sidebar

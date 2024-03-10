@@ -15,6 +15,11 @@ import { AuthHelpers } from "../../helpers";
 import Home from "../../components/Home";
 import CreateFlow from "../CreateFlow";
 import Analytics from "../Analytics";
+import Login from "../../components/Auth/Login";
+import ForgotPassword from "../../components/Auth/ForgotPassword";
+import ResetPassword from "../../components/Auth/ResetPassword";
+import Signup from "../../components/Auth/Signup";
+import { toast } from "react-toastify";
 
 const allRoutes = [
   {
@@ -23,51 +28,68 @@ const allRoutes = [
     properties: { ketan: 1 },
     component: Home,
   },
+
   {
     path: APP_ROUTES.LOGIN,
     isProtected: false,
     properties: { ketan: 2 },
-    component: Home,
+    component: Login,
+  },
+  {
+    path: APP_ROUTES.FORGOT_PASSWORD,
+    isProtected: false,
+    properties: { ketan: 2 },
+    component: ForgotPassword,
+  },
+  {
+    path: APP_ROUTES.RESET_PASSWORD,
+    isProtected: false,
+    component: ResetPassword,
+  },
+  {
+    path: APP_ROUTES.REGISTER,
+    isProtected: false,
+    component: Signup,
   },
   {
     path: APP_ROUTES.MANUAL_MODE,
-    isProtected: false,
+    isProtected: true,
     properties: { mode: "manual" },
     component: CreateFlow,
   },
   {
     path: APP_ROUTES.AI_MODE,
-    isProtected: false,
+    isProtected: true,
     properties: { renderPath: APP_ROUTES.AI_MODE },
     component: Analytics,
   },
   {
     path: APP_ROUTES.EDIT_QUIZ,
-    isProtected: false,
+    isProtected: true,
     properties: { mode: "edit" },
     component: CreateFlow,
   },
   {
     path: APP_ROUTES.ATTEMPT_QUIZ,
-    isProtected: false,
+    isProtected: true,
     properties: { mode: "attempt" },
     component: CreateFlow,
   },
   {
     path: APP_ROUTES.VIEW_QUIZ_ANALYTICS,
-    isProtected: false,
+    isProtected: true,
     properties: { renderPath: APP_ROUTES.VIEW_QUIZ_ANALYTICS },
     component: Analytics,
   },
   {
     path: APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ,
-    isProtected: false,
+    isProtected: true,
     properties: { renderPath: APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ },
     component: Analytics,
   },
   {
     path: APP_ROUTES.QUIZZES,
-    isProtected: false,
+    isProtected: true,
     properties: { renderPath: APP_ROUTES.QUIZZES },
     component: Analytics,
   },
@@ -75,7 +97,10 @@ const allRoutes = [
 const PrivateRoutes = (props) => {
   console.log(props, "PrivateRoutes");
   //   let auth = { token: false };
-  const isAuthenticated = true;
+  const isAuthenticated = AuthHelpers.isAuthenticated();
+  if (!isAuthenticated) {
+    toast.error("Please Login");
+  }
   return isAuthenticated ? (
     <Outlet {...props} />
   ) : (
