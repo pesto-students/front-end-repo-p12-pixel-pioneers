@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getAllQuizzesAction } from "../../../redux/actions";
+import {
+  getAllQuizzesAction,
+  resetGetQuizzesAction,
+} from "../../../redux/actions";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
 import {
@@ -23,8 +26,9 @@ const AllQuizzes = (props) => {
   const quizzes = useSelector((state) => state.analytics.quizzes);
   const [loader, setLoader] = useState(false);
   useEffect(() => {
+    dispatch(getAllQuizzesAction());
     return () => {
-      dispatch(getAllQuizzesAction());
+      dispatch(resetGetQuizzesAction());
     };
   }, []);
   useEffect(() => {
