@@ -119,7 +119,7 @@ const AttemptQuiz = (props) => {
     } else if (questionIndex === -1) {
       return (
         <>
-          <PageTitle text="ATTEMPT QUIZ" />
+          <PageTitle noBackBtn={true} text="ATTEMPT QUIZ" />
           <Input
             value={data.email}
             className={`shadow-lg p-0 h-10 w-2/3 mx-auto `}

@@ -101,7 +101,7 @@ const Sidebar = (props) => {
     setAllOptionsFilled(checkAllOptionsFilled());
   }, [currQuestion.options]);
   const actionBtn = () => {
-    if (currQuestion?.question?.length <= 0) {
+    if (currQuestion?.question_title?.length <= 0) {
       toast.error("Please enter a valid question");
       setErrors({ ...errors, question: true });
       return;

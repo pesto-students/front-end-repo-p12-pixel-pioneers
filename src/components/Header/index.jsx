@@ -9,15 +9,15 @@ const linksDef = [
     link: APP_ROUTES.HOME,
   },
   {
-    text: "Features",
+    text: "Manual Mode",
     link: APP_ROUTES.HOME,
   },
   {
-    text: "Features",
+    text: "Testimonials",
     link: APP_ROUTES.HOME,
   },
   {
-    text: "Features",
+    text: "FAQs",
     link: APP_ROUTES.HOME,
   },
 ];
@@ -41,7 +41,7 @@ const Header = ({ links = linksDef }) => {
     <header className="flex mb-10 w-full">
       <Link
         className="font-semibold text-3xl flex items-center  text-black w-1/6 text-start"
-        to={APP_ROUTES.HOME}
+        to={isAuth ? APP_ROUTES.QUIZZES : APP_ROUTES.HOME}
       >
         Quizzify
       </Link>

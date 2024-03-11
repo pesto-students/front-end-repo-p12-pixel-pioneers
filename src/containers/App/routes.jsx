@@ -71,7 +71,7 @@ const allRoutes = [
   },
   {
     path: APP_ROUTES.ATTEMPT_QUIZ,
-    isProtected: true,
+    isProtected: false,
     properties: { mode: "attempt" },
     component: CreateFlow,
   },

@@ -54,7 +54,7 @@ const AllQuizzes = (props) => {
   console.log(quizzes);
   return (
     <div className="pb-16">
-      <PageTitle text="All Quizzes" />
+      <PageTitle noBackBtn={true} text="All Quizzes" />
       {loader ? (
         <ComponentLoader />
       ) : (
