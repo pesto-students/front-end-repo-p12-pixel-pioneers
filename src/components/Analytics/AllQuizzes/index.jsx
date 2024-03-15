@@ -25,6 +25,32 @@ const AllQuizzes = (props) => {
   let navigate = useNavigate();
   const quizzes = useSelector((state) => state.analytics.quizzes);
   const [loader, setLoader] = useState(false);
+  const tableData = [
+    {
+      id: 1,
+      name: "John Doe",
+      link: "https://example.com",
+      details: "Lorem ipsum",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      link: "https://example.org",
+      details: "Dolor sit amet",
+    },
+    {
+      id: 3,
+      name: "Alice Johnson",
+      link: "https://example.net",
+      details: "Consectetur adipiscing elit",
+    },
+    {
+      id: 4,
+      name: "Bob Brown",
+      link: "https://example.edu",
+      details: "Sed do eiusmod tempor",
+    },
+  ];
   useEffect(() => {
     dispatch(getAllQuizzesAction());
     return () => {
@@ -60,67 +86,75 @@ const AllQuizzes = (props) => {
       ) : (
         <>
           <div className="flex items-center my-4 justify-center">
-            <Button
+            {/* <Button
               onClick={() => navigate(APP_ROUTES.MANUAL_MODE)}
               // disabled={!allOptionsFilled}
               className={"border border-black py-2 px-6 mr-auto mt-8 rem"}
             >
               New quiz
-            </Button>
+            </Button> */}
           </div>
-          <table className="min-w-full divide-y border divide-gray-200">
-            <thead className="bg-gray-50">
+
+          <table className="min-w-full">
+            <thead className="bg-navyblue h-[75px]    text-white">
               <tr>
-                {/* <th
-                scope="col"
-                className="px-6 py-3 w-[10%]  border border-gray-300  text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Id
-              </th> */}
-                <th
-                  scope="col"
-                  className="px-6 py-3 border border-gray-300  text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
+                <th className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
                   Quiz Name
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 w-[10%] border border-gray-300  text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Action
+                <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
+                  Date
+                </th>
+                <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
+                  Link
+                </th>
+                <th className="px-6 py-3 border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
+                  Details
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {quizzes?.data?.map((row) => (
-                <tr key={row.id} className="hover:bg-gray-100">
-                  {/* <td className="px-6 py-4 border border-gray-300  whitespace-nowrap text-start">
-                  {row._id}
-                </td> */}
-                  <td className="px-6 py-4 border border-gray-300  whitespace-nowrap text-start">
+            <tbody className="bg-white">
+              {quizzes?.data?.map((row, index) => (
+                <tr
+                  key={row._id}
+                  className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
+                >
+                  <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
                     {row.title}
                   </td>
-                  <td className="px-6 py-4 border border-gray-300 text-start">
-                    <div className=" flex items-center justify-start gap-4">
+                  <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                    {Date.now()}
+                  </td>
+                  <td className="px-6 py-4  text-xl  cursor-pointer whitespace-nowrap text-start">
+                    {/* <FaCopy
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          replaceInString(
+                            `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                            { id: row._id }
+                          )
+                        );
+                        toast.success("Quiz link copied to clipboard");
+                      }}
+                    /> */}
+                    <span>
+                      {replaceInString(
+                        `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                        { id: row._id }
+                      )}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4  text-xl  text-start">
+                    <div className="flex items-center justify-start gap-4">
                       <Link
                         to={replaceInString(APP_ROUTES.EDIT_QUIZ, {
                           id: row._id,
                         })}
+                        // title="Edit Form"
                       >
-                        <MdEdit />
+                        <MdEdit title="Ketan" />
                       </Link>
-                      <FaCopy
-                        className="cursor-pointer"
-                        onClick={() => {
-                          navigator.clipboard.writeText(
-                            replaceInString(
-                              `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
-                              { id: row._id }
-                            )
-                          );
-                          toast.success("Quiz link copied to clipboard");
-                        }}
-                      />
+
                       <Link
                         to={replaceInString(APP_ROUTES.VIEW_QUIZ_ANALYTICS, {
                           id: row._id,

@@ -51,70 +51,77 @@ const ViewQuizData = (props) => {
       ) : (
         <div className="pb-16">
           <PageTitle text={`Quiz Results :`} />
-          <section className="my-8">
+          <div className=" flex flex-row gap-2">
+            {/* <section className="my-8">
+            </section> */}
+            <table className="w-[70%] bg-white">
+              <thead className="bg-navyblue h-[75px]    text-white">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
+                  >
+                    User
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
+                  >
+                    Correct Answers
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
+                  >
+                    Wrong Answers
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
+                  >
+                    Link
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {detailedResult?.map((row, index) => (
+                  <tr
+                    key={row.key}
+                    className={` h-[75px] + ${
+                      index % 2 === 1 && "bg-[#f3f3f3]"
+                    }`}
+                  >
+                    <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
+                      {row.key}
+                    </td>
+                    <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                      {row.correctAnswers}
+                    </td>
+                    <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                      {row.wrongAnswers}
+                    </td>
+                    <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                      <Link
+                        to={replaceInString(
+                          APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ,
+                          {
+                            id: params?.id,
+                            user: row?.key,
+                          }
+                        )}
+                      >
+                        <FaExternalLinkAlt />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <Pie
-              className="!h-[500px] !w-[500px]"
+              className=" !h-[400px] !w-[400px]"
               data={resultPercentageData}
             />
-          </section>
-          <table className="min-w-full divide-y border divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  User
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Correct Answers
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Wrong Answers
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Link
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {detailedResult?.map((row) => (
-                <tr key={row.key} className="hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap text-start">
-                    {row.key}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-start">
-                    {row.correctAnswers}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-start">
-                    {row.wrongAnswers}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-start">
-                    <Link
-                      to={replaceInString(
-                        APP_ROUTES.VIEW_USER_ANALYTICS_FOR_QUIZ,
-                        {
-                          id: params?.id,
-                          user: row?.key,
-                        }
-                      )}
-                    >
-                      <FaExternalLinkAlt />
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          </div>
         </div>
       )}
     </>

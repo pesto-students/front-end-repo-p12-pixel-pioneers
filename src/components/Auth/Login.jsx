@@ -6,6 +6,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../../utils";
 import { AuthHelpers } from "../../helpers";
+import { GoogleLogin } from "@react-oauth/google";
+import Icon from "./images/login.png";
 //import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
@@ -44,16 +46,22 @@ const Login = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
 
   return (
-    <div className="relative py-4 h-[96vh] flex justify-center items-center bg-gradient-to-r from-white-900 to-white-500">
-      <div className="mx-auto border w-[400px] shadow-xl py-8 rounded-lg my-10">
-        <h1 className="my-3 px-4 py-2 text-5xl table mx-auto font-semibold text-white  text-center bg-[#B9FF66]">
-          Quizzify
+    <div className="relative gap-2 py-4 h-[96vh] flex justify-center items-center bg-gradient-to-r from-white-900 to-white-500">
+      <div className="mx-auto border h-full w-1/2  rounded-lg ">
+        <h1 className="mb-3 py-2 text-4xl font-normal   text-start ">
+          Quizzify.in
         </h1>
-        <h4 className="my-1 font-medium text-2xl  text-black text-center ">
-          Login
-        </h4>
+        <h2 className="my-1 font-semibold text-[50px]  text-black text-start ">
+          Welcome to Quizzify 👋
+        </h2>
         <div className="mb-2 flex justify-center py-2">
           {/* <Button
               variant="contained"
@@ -65,7 +73,6 @@ const Login = () => {
               Login with Google
             </Button> */}
         </div>
-        <hr className="w-[90%] m-auto h-[0.05rem] bg-gray-500 border-0" />
         <div className="mx-10 my-4" background-color="#B9FF66">
           <form onSubmit={handleSubmit}>
             <Input
@@ -138,6 +145,14 @@ const Login = () => {
             </p>
           </form>
         </div>
+
+        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+      </div>
+      <div className="bg-green h-full  w-1/2 flex justify-center items-center ">
+        <img
+          src={Icon}
+          className="w-full aspect-square object-contain h-[500px]"
+        />
       </div>
     </div>
   );

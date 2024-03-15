@@ -23,12 +23,16 @@ const Analytics = (props) => {
   //   }, [params]);
   const links = [
     {
-      text: "Manual Mode",
+      text: "Create a quiz",
       link: APP_ROUTES.MANUAL_MODE,
     },
     {
       text: "AI Mode",
       link: APP_ROUTES.AI_MODE,
+    },
+    {
+      text: "My Quizzes",
+      link: APP_ROUTES.QUIZZES,
     },
     // {
     //   text: "Features",
@@ -40,7 +44,7 @@ const Analytics = (props) => {
     // },
   ];
   return (
-    <div className="container mt-10 h-[86vh] py-4  box-border">
+    <div className="container mt-0 h-[86vh] py-4  box-border">
       <Header links={links} />
       {/* <div className="flex mb-8 w-full h-[50px] border">
 

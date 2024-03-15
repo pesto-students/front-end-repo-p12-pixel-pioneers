@@ -146,52 +146,55 @@ const UserAnalyticsPerQuiz = (props) => {
     <ComponentLoader />
   ) : (
     <>
-      <PageTitle text={` Analytics for : ${user}`} />
+      <PageTitle text={` Analytics`} />
       <section>
         {/* <Bar data={barchartData} options={options} /> */}
 
-        <table className="min-w-full divide-y border divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full ">
+          <thead className="bg-navyblue h-[75px]    text-white">
             <tr>
               <th
                 scope="col"
-                className="px-6 w-[70%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
               >
                 Question
               </th>
               <th
                 scope="col"
-                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
               >
                 Submitted Answer
               </th>
               <th
                 scope="col"
-                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
               >
                 Correct Answer
               </th>
               <th
                 scope="col"
-                className="px-6 w-[10%] border border-gray-300 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3  border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
               >
                 Result
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {quizData?.data?.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-100">
-                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
+          <tbody className="bg-white ">
+            {quizData?.data?.map((row, index) => (
+              <tr
+                key={row.id}
+                className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
+              >
+                <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
                   {row.question}
                 </td>
-                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
+                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
                   {row.userAnswer}
                 </td>
-                <td className="px-6 py-4 border border-gray-300 whitespace-nowrap text-start">
+                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
                   {row.correctAnswer}
                 </td>
-                <td className="px-6 uppercase font-medium py-4 border border-gray-300 whitespace-nowrap text-start">
+                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
                   {row.isCorrect ? "Correct ✅" : "Incorrect ❌"}
                 </td>
               </tr>

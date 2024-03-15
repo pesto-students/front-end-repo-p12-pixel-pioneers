@@ -1,7 +1,15 @@
 import { Input } from "@mui/base";
 import React from "react";
 
-const Option = ({ option, onChange, onClick, isCorrect, error, onBlur }) => {
+const Option = ({
+  option,
+  onChange,
+  placeholder,
+  onClick,
+  isCorrect,
+  error,
+  onBlur,
+}) => {
   // console.log(error, "option");
 
   return (
@@ -20,7 +28,7 @@ const Option = ({ option, onChange, onClick, isCorrect, error, onBlur }) => {
         },
       }}
       aria-label="Question"
-      placeholder="Enter Option"
+      placeholder={placeholder ? placeholder : "Enter Option"}
       onChange={(e) => onChange(e.target.value)}
     />
   );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { APP_ROUTES } from "../../utils";
-import { AI_difficulty_level, question_types } from "./constants";
-import { Option, Select, Input, Button, TextareaAutosize } from "@mui/base";
+import { question_types } from "./constants";
+import { Option, Select, Input, Button } from "@mui/base";
 import OptionComponent from "./Option";
 import { toast } from "react-toastify";
 import PageTitle from "../PageTitle";
@@ -22,10 +22,6 @@ const Sidebar = (props) => {
   const [errors, setErrors] = useState({
     question: false,
     options: [],
-  });
-  const [aiModeData, setaiModeData] = useState({
-    keywords: ["", "", "", ""],
-    difficulty: AI_difficulty_level.EASY,
   });
 
   // const [question, setQuestion] = useState({
@@ -183,15 +179,15 @@ const Sidebar = (props) => {
           ? "Manual Mode"
           : "AI Mode"}
       </h1> */}
-      {/* <PageTitle
+      <PageTitle
         text={
           mode === "manual"
-            ? "Create"
+            ? "Manual Mode"
             : mode === "edit"
             ? "Edit quiz"
             : "AI Mode"
         }
-      /> */}
+      />
       <h2 className="text-3xl text-start font-medium">Question type</h2>
       <Select
         value={currQuestion.question_type}
@@ -229,141 +225,65 @@ const Sidebar = (props) => {
       </Select>
       <h3 className="text-xl text-start">Question</h3>
       <span>
-        {mode === "manual" ? (
-          <Input
-            value={currQuestion.question_title}
-            className={`shadow-lg p-0 h-10 w-2/3 `}
-            slotProps={{
-              input: {
-                className: `w-full text-sm font-sans  font-normal leading-5 p-4  m-0
-                 rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
-                 ${errors.question && "border border-error"}`,
-              },
-            }}
-            aria-label="Question"
-            // onBlur={() =>
-            //   currQuestion.question.length <= 0 &&
-            //   setErrors({ ...errors, question: true })
-            // }
-            placeholder="Enter your question"
-            onChange={(e) => setQuestionState("question_title", e.target.value)}
-          />
-        ) : (
-          <TextareaAutosize
-            value={currQuestion.question_title}
-            onChange={(e) => setQuestionState("question_title", e.target.value)}
-            minRows={4}
-            className={`shadow-lg  h-10 w-full text-sm font-sans  font-normal leading-5 p-4  m-0
-                 rounded-lg  shadow-slate-100 focus-visible:outline-0
-                 ${errors.question && "border border-error"}`}
-            // slotProps={{
-            //   textarea: {
-            //     className: `w-full text-sm font-sans  font-normal leading-5 p-4  m-0
-            //      rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
-            //      ${errors.question && "border border-error"}`,
-            //   },
-            // }}
-          />
-        )}
+        <Input
+          value={currQuestion.question_title}
+          className={`shadow-lg p-0 h-10 w-2/3 `}
+          slotProps={{
+            input: {
+              className: `w-full text-sm font-sans  font-normal leading-5 p-4  m-0
+               rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
+               ${errors.question && "border border-error"}`,
+            },
+          }}
+          aria-label="Question"
+          // onBlur={() =>
+          //   currQuestion.question.length <= 0 &&
+          //   setErrors({ ...errors, question: true })
+          // }
+          placeholder="Enter your question"
+          onChange={(e) => setQuestionState("question_title", e.target.value)}
+        />
         {/* {errors.question && (
           <p className="text-start text-error mt-3">Please enter Question</p>
         )} */}
       </span>
-      {mode === "manual" ? (
-        <>
-          <h3 className="text-xl text-start my-4">Enter your answers</h3>
-          <div className=" grid grid-cols-2 gap-4">
-            {currQuestion.options.map((option, index) => (
-              <OptionComponent
-                key={index}
-                option={option}
-                error={errors.options[index]}
-                // onBlur={() =>
-                //   setErrors({
-                //     ...errors,
-                //     options: errors.options.map((opt, ind) => {
-                //       console.log({ opt, option, ind, index }, "opt");
-                //       if (ind === index) {
-                //         if (option.length <= 0) {
-                //           return true;
-                //         } else {
-                //           return false;
-                //         }
-                //       }
-                //       return opt;
-                //     }),
-                //   })
-                // }
-                onChange={(val) => setOptions(val, index)}
-                // isCorrect={
-                //   currQuestion.question_type !== question_types.POLL &&
-                //   index === currQuestion.correct_answer
-                //     ? true
-                //     : false
-                // }
-                // onClick={() =>
-                //   currQuestion.question_type !== question_types.POLL &&
-                //   setQuestionState("correct_answer", index)
-                // }
-              />
-            ))}
-          </div>
-        </>
-      ) : (
-        <>
-          <h3 className="text-xl flex flex-row items-center justify-start gap-4 text-start my-4">
-            Please select difficulty level
-            <Select
-              value={aiModeData.difficulty}
-              className="w-[280px]  text-start p-2 px-4 shadow-lg"
-              onChange={(_, newValue) =>
-                setaiModeData({
-                  ...aiModeData,
-                  difficulty: newValue,
-                })
-              }
-            >
-              <div className="container w-[280px] bg-white cursor-pointer shadow-lg py-4 px-0 ">
-                <>
-                  {Object.keys(AI_difficulty_level).map((level) => (
-                    <Option
-                      className="hover:bg-slate-200 pl-4"
-                      value={AI_difficulty_level[level]}
-                    >
-                      {AI_difficulty_level[level]}
-                    </Option>
-                  ))}
-                </>
-              </div>
-            </Select>
-          </h3>
-
-          <h3 className="text-xl text-start my-4">
-            Enter keywords for search if any
-          </h3>
-          <div className=" grid grid-cols-2 gap-4">
-            {aiModeData.keywords.map((keyword, index) => (
-              <OptionComponent
-                key={index}
-                option={keyword}
-                placeholder={"Enter Keyword"}
-                // error={errors.options[index]}
-                onChange={(val) => {
-                  setaiModeData({
-                    ...aiModeData,
-                    keywords: aiModeData.keywords.map((keyword, ind) => {
-                      if (ind === index) {
-                        return val;
-                      }
-                      return keyword;
-                    }),
-                  });
-                }}
-              />
-            ))}
-          </div>
-        </>
-      )}
+      <h3 className="text-xl text-start my-4">Enter your answers</h3>
+      <div className=" grid grid-cols-2 gap-4">
+        {currQuestion.options.map((option, index) => (
+          <OptionComponent
+            key={index}
+            option={option}
+            error={errors.options[index]}
+            // onBlur={() =>
+            //   setErrors({
+            //     ...errors,
+            //     options: errors.options.map((opt, ind) => {
+            //       console.log({ opt, option, ind, index }, "opt");
+            //       if (ind === index) {
+            //         if (option.length <= 0) {
+            //           return true;
+            //         } else {
+            //           return false;
+            //         }
+            //       }
+            //       return opt;
+            //     }),
+            //   })
+            // }
+            onChange={(val) => setOptions(val, index)}
+            // isCorrect={
+            //   currQuestion.question_type !== question_types.POLL &&
+            //   index === currQuestion.correct_answer
+            //     ? true
+            //     : false
+            // }
+            // onClick={() =>
+            //   currQuestion.question_type !== question_types.POLL &&
+            //   setQuestionState("correct_answer", index)
+            // }
+          />
+        ))}
+      </div>
       <div className="flex gap-4 flex-wrap flex-row justify-start items-center  my-4">
         <input
           type="checkbox"
@@ -380,33 +300,32 @@ const Sidebar = (props) => {
         <h3 className="text-xl text-start ">Add question to question bank</h3>
       </div>
       <div className="flex gap-4 flex-wrap flex-row justify-between items-center  my-4">
-        {currQuestion.question_type !== question_types.POLL &&
-          mode !== "ai" && (
-            <>
-              <h3 className="text-xl text-start ">Correct Answer:</h3>
-              <Select
-                value={currQuestion.correct_answer}
-                placeholder={"Please Select"}
-                disabled={!allOptionsFilled}
-                // onBlur={()=>}
-                className={`w-[200px] max-w-[200px] text-start p-2 px-4 shadow-lg ${
-                  !allOptionsFilled
-                    ? "cursor-not-allowed border border-error"
-                    : ""
-                }
+        {currQuestion.question_type !== question_types.POLL && (
+          <>
+            <h3 className="text-xl text-start ">Correct Answer:</h3>
+            <Select
+              value={currQuestion.correct_answer}
+              placeholder={"Please Select"}
+              disabled={!allOptionsFilled}
+              // onBlur={()=>}
+              className={`w-[200px] max-w-[200px] text-start p-2 px-4 shadow-lg ${
+                !allOptionsFilled
+                  ? "cursor-not-allowed border border-error"
+                  : ""
+              }
               `}
-                onChange={(_, newValue) =>
-                  setQuestionState("correct_answer", newValue)
-                }
-              >
-                <div className="container w-[200px] bg-white cursor-pointer shadow-lg p-4">
-                  {currQuestion.options.map((option, index) => (
-                    <Option value={index}>{option}</Option>
-                  ))}
-                </div>
-              </Select>
-            </>
-          )}
+              onChange={(_, newValue) =>
+                setQuestionState("correct_answer", newValue)
+              }
+            >
+              <div className="container w-[200px] bg-white cursor-pointer shadow-lg p-4">
+                {currQuestion.options.map((option, index) => (
+                  <Option value={index}>{option}</Option>
+                ))}
+              </div>
+            </Select>
+          </>
+        )}
         <Button
           onClick={actionBtn}
           // disabled={!allOptionsFilled}

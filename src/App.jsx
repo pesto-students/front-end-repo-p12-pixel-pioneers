@@ -10,12 +10,15 @@ import Child from "./Child";
 import AppContainer from "./containers/App";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   return (
     <>
       <Provider store={Store}>
-        <AppContainer />
+        <GoogleOAuthProvider clientId="925698554656-5c5kvh7tktm67270gcpkmeffuione6d9.apps.googleusercontent.com">
+          <AppContainer />
+        </GoogleOAuthProvider>
         {/* <h1 className="text-3xl text-red-700 font-bold underline">
           Hello world!
         </h1>

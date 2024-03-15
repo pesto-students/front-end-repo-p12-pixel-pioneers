@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { APP_ROUTES, AuthHelpers } from "../../utils";
 import { Button, Popper } from "@mui/base";
 import { FaUserCircle } from "react-icons/fa";
@@ -27,6 +27,7 @@ const Header = ({ links = linksDef }) => {
   const [trigger, setTrigger] = useState(false);
   const navigate = useNavigate();
   const anchorEl = useRef();
+  const location = useLocation();
   const handleClick = () => {
     // e.preventDefault();
     setOpen(!open);
@@ -34,23 +35,25 @@ const Header = ({ links = linksDef }) => {
   useEffect(() => {
     setIsAuth(AuthHelpers.isAuthenticated());
   }, [trigger]);
-  console.log();
+
   // const open = Boolean(anchorEl);
   // const id = open ? "simple-popper" : undefined;
   return (
     <header className="flex mb-10 w-full">
       <Link
-        className="font-semibold text-3xl flex items-center  text-black w-1/6 text-start"
+        className=" text-4xl flex items-center  text-black w-1/6 text-start"
         to={isAuth ? APP_ROUTES.QUIZZES : APP_ROUTES.HOME}
       >
-        Quizzify
+        Quizzify.in
       </Link>
       {/* <p className="font-normal text-black mr-auto"></p> */}
       <nav className="flex items-center w-5/6 justify-between">
         <span className="flex items-end gap-8 ml-auto mr-10 justify-between">
           {links.map((link, index) => (
             <Link
-              className="font-normal flex items-center   text-black  justify-end"
+              className={`font-normal text-xl flex items-center ${
+                location.pathname === link.link ? "text-green" : ""
+              } text-black  justify-end`}
               to={link.link}
             >
               {link.text}
@@ -68,8 +71,19 @@ const Header = ({ links = linksDef }) => {
           </Link>
         ) : (
           <span ref={anchorEl}>
-            <FaUserCircle
-              className="cursor-pointer h-8 w-8 transition text-green text-sm font-sans font-semibold leading-normal  text-white rounded-lg"
+            <Button
+              onMouseEnter={handleClick}
+              onMouseLeave={
+                () => handleClick()
+                // setTimeout(() => {
+                // }, 2000)
+              }
+              className="py-2 rounded-lg  px-4 border  border-black border-1"
+            >
+              User Profile
+            </Button>
+            {/* <FaUserCircle
+              className="cursor-pointer h-8 w-8 transition border text-black text-sm font-sans font-semibold leading-normal   rounded-lg"
               // aria-describedby={id}
               type="button"
               // onClick={handleClick}
@@ -79,7 +93,7 @@ const Header = ({ links = linksDef }) => {
                 // setTimeout(() => {
                 // }, 2000)
               }
-            />
+            /> */}
           </span>
         )}
         {/* <button

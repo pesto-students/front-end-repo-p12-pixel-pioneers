@@ -201,7 +201,7 @@ const CreateFlow = (props) => {
                 {...props}
               />
             </div>
-            <div className=" w-1/2 overflow-y-auto py-3 box-border rounded-lg  shadow-lg pl-2">
+            <div className=" w-1/2 overflow-y-auto bg-grey rounded-3xl p-4 box-border   shadow-lg ">
               {/* <Sidebar {...props} /> */}
               <QuestionsList
                 submitAction={submitAction}

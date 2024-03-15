@@ -15,7 +15,7 @@ const BackIcon = ({ className }) => {
   return (
     <div>
       <IoArrowBack
-        className={"ml-4 w-8 h-8 cursor-pointer" + className}
+        className={"ml-4 w-16 h-16 cursor-pointer" + className}
         onClick={goBackOrRedirect}
       />
     </div>

@@ -60,8 +60,8 @@ const allRoutes = [
   {
     path: APP_ROUTES.AI_MODE,
     isProtected: true,
-    properties: { renderPath: APP_ROUTES.AI_MODE },
-    component: Analytics,
+    properties: { mode: "ai" },
+    component: CreateFlow,
   },
   {
     path: APP_ROUTES.EDIT_QUIZ,
