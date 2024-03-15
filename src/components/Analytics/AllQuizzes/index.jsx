@@ -96,7 +96,7 @@ const AllQuizzes = (props) => {
           </div>
 
           <table className="min-w-full">
-            <thead className="bg-navyblue h-[75px]    text-white">
+            <thead className="bg-navyblue max-h-[75px]    text-white">
               <tr>
                 <th className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
                   Quiz Name
