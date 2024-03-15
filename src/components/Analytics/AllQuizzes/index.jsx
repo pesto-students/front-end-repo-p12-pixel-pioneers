@@ -95,8 +95,8 @@ const AllQuizzes = (props) => {
             </Button> */}
           </div>
 
-          <table className="min-w-full">
-            <thead className="bg-navyblue max-h-[75px]    text-white">
+          <table className="w-[800px]">
+            <thead className="bg-navyblue h-[75px]  w-[800px]  text-white">
               <tr>
                 <th className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
                   Quiz Name
@@ -116,9 +116,14 @@ const AllQuizzes = (props) => {
               {quizzes?.data?.map((row, index) => (
                 <tr
                   key={row._id}
-                  className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
+                  className={` min-h-[75px] w-[800px]+ ${
+                    index % 2 === 1 && "bg-[#f3f3f3]"
+                  }`}
                 >
-                  <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
+                  <td
+                    title={row.title}
+                    className="px-6 py-4 truncate max-w-[300px]  font-medium  text-3xl  whitespace-nowrap text-start"
+                  >
                     {row.title}
                   </td>
                   <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
