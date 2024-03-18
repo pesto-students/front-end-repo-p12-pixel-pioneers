@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 const allRoutes = [
   {
     path: APP_ROUTES.HOME,
-    isProtected: true,
+    isProtected: false,
     properties: { ketan: 1 },
     component: Home,
   },
