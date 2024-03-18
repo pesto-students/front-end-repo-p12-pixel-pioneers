@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { API_CONSTANTS } from "../../utils";
 import AI_Modal from "./AI_Modal";
 import QuestionBankModal from "./QuestionBankModal";
+import { toast } from "react-toastify";
 
 const QuestionsList = (props) => {
   const {
@@ -23,8 +24,29 @@ const QuestionsList = (props) => {
     ai_modal: false,
     question_bank: false,
   });
-
+  function checkDuplicateQuestions(Questions, newData) {
+    for (const newQuestion of newData) {
+      const idToCheck = newQuestion.id || newQuestion._id; // Treat id and _id as the same
+      if (
+        Questions.some(
+          (existingQuestion) =>
+            existingQuestion._id === idToCheck ||
+            existingQuestion.id === idToCheck
+        )
+      ) {
+        return true; // If any duplicate found, return true
+      }
+    }
+    return false; // If no duplicates found, return false
+  }
   const updateQues = (newQues) => {
+    console.log(checkDuplicateQuestions(questions, newQues), "ketan");
+    if (checkDuplicateQuestions(questions, newQues)) {
+      toast.error(
+        "One or me of selected questions already exist, please remove duplicated"
+      );
+      return;
+    }
     setQuestions([...questions, ...newQues]);
   };
   console.log(triggers, "triggers");
