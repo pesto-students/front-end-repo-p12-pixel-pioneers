@@ -129,7 +129,7 @@ const AllQuizzes = (props) => {
                   <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
                     {Date.now()}
                   </td>
-                  <td className="px-6 py-4  text-xl  cursor-pointer whitespace-nowrap text-start">
+                  <td className="px-6 py-4 w-16 truncate text-xl  cursor-pointer whitespace-nowrap text-start">
                     {/* <FaCopy
                       className="cursor-pointer"
                       onClick={() => {
@@ -142,7 +142,18 @@ const AllQuizzes = (props) => {
                         toast.success("Quiz link copied to clipboard");
                       }}
                     /> */}
-                    <span>
+                    <span
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          replaceInString(
+                            `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                            { id: row._id }
+                          )
+                        );
+                        toast.success("Quiz link copied to clipboard");
+                      }}
+                      title={`Click to copy`}
+                    >
                       {replaceInString(
                         `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
                         { id: row._id }
