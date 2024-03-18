@@ -20,6 +20,7 @@ import AttemptQuiz from "../../components/AttemptQuiz";
 const CreateFlow = (props) => {
   const { mode } = props;
   const location = useLocation();
+  console.log(location, "location");
   const params = useParams();
   const [questions, setQuestions] = useState([]);
   const [quizName, setQuizName] = useState("New Quiz");
@@ -58,8 +59,14 @@ const CreateFlow = (props) => {
       dispatch(resetEditQuizAction());
       dispatch(resetGetWholeQuizAction());
       setGeneratedQuizId(null);
+      setQuestions([]);
     };
   }, []);
+  useEffect(() => {
+    setQuestions([]);
+    // return () => {
+    // };
+  }, [location.pathname]);
   useEffect(() => {
     switch (quizSelector.quiz.status) {
       case API_CONSTANTS.success:
@@ -179,6 +186,7 @@ const CreateFlow = (props) => {
     //   link: APP_ROUTES.HOME,
     // },
   ];
+
   return (
     <>
       {mode === "attempt" ? (
@@ -196,8 +204,9 @@ const CreateFlow = (props) => {
                 addQuestion={addQuestion}
                 updateQuesIndex={updateQuesIndex}
                 isPoll={questions?.[0]?.question_type === question_types.POLL}
-                firstQues={questions.length === 0}
+                firstQues={questions?.length === 0}
                 updateQues={updateQues}
+                setQuestions={setQuestions}
                 {...props}
               />
             </div>
@@ -206,6 +215,7 @@ const CreateFlow = (props) => {
               <QuestionsList
                 submitAction={submitAction}
                 questions={questions}
+                setQuestions={setQuestions}
                 quizName={quizName}
                 setQuizName={setQuizName}
                 deleteQues={deleteQues}

@@ -4,8 +4,15 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import { Button, Modal } from "@mui/base";
 
 const RenderQuestion = (props) => {
-  const { question_num, question, deleteQues, editQuestion, hideActions } =
-    props;
+  const {
+    question_num,
+    question,
+    deleteQues,
+    editQuestion,
+    hideActions,
+    toggleQuestion,
+    questionAdded,
+  } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -17,33 +24,46 @@ const RenderQuestion = (props) => {
   };
   return (
     <>
-      <div className="my-4">
+      <div className="my-4 w-full">
         <h1 className="font-medium text-start text-2xl flex items-center justify-start">
           Question {question_num}:
           {!hideActions && (
             <>
               <span className="ml-8 flex items-center gap-1 justify-start ">
-                <MdEdit
-                  className="cursor-pointer"
-                  onClick={() => editQuestion(question_num - 1)}
-                />
-                <MdDelete
-                  className="cursor-pointer"
-                  // onClick={() => deleteQues(question_num - 1)}
-                  onClick={() => handleOpen()}
-                />
+                {editQuestion && (
+                  <MdEdit
+                    className="cursor-pointer"
+                    onClick={() => editQuestion(question_num - 1)}
+                  />
+                )}
+                {deleteQues && (
+                  <MdDelete
+                    className="cursor-pointer"
+                    // onClick={() => deleteQues(question_num - 1)}
+                    onClick={() => handleOpen()}
+                  />
+                )}
               </span>
             </>
           )}
         </h1>
         <h2 className="font-normal text-start text-xl">
-          {question.question_title}
+          {toggleQuestion && (
+            <input
+              type="checkbox"
+              className="mr-3"
+              checked={questionAdded}
+              onClick={toggleQuestion}
+              id=""
+            />
+          )}
+          {question?.question_title}
         </h2>
         <div className="grid pl-2 grid-row gap-2">
-          {question.options.map((option, index) => (
+          {question?.options?.map((option, index) => (
             <RenderOption
               key={index}
-              isAnswer={question.correct_answer === index}
+              isAnswer={question?.correct_answer === index}
               option={option}
             />
           ))}

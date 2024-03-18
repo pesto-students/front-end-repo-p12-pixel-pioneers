@@ -5,7 +5,7 @@ const Option = ({
   option,
   onChange,
   placeholder,
-  onClick,
+  onClick = null,
   isCorrect,
   error,
   onBlur,
@@ -18,6 +18,7 @@ const Option = ({
       //   onClick={onClick}
       className={`shadow-lg  box-border  h-10 `}
       onBlur={onBlur}
+      onClick={onClick}
       slotProps={{
         input: {
           className: `w-full text-sm ${

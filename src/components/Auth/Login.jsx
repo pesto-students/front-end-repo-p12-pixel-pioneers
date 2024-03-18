@@ -149,10 +149,7 @@ const Login = () => {
         <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
       </div>
       <div className="bg-green h-full  w-1/2 flex justify-center items-center ">
-        <img
-          src={Icon}
-          className="w-full aspect-square object-contain h-[500px]"
-        />
+        <img src={Icon} className="w-full object-contain h-[350px]" />
       </div>
     </div>
   );
