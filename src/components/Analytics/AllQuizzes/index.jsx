@@ -80,7 +80,7 @@ const AllQuizzes = (props) => {
   console.log(quizzes);
   return (
     <div className="pb-16">
-      <PageTitle noBackBtn={true} text="All Quizzes" />
+      <PageTitle noBackBtn={true} text="Your Quizzes" />
       {loader ? (
         <ComponentLoader />
       ) : (
@@ -129,7 +129,7 @@ const AllQuizzes = (props) => {
                   <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
                     {Date.now()}
                   </td>
-                  <td className="px-6 py-4 w-16 truncate text-xl  cursor-pointer whitespace-nowrap text-start">
+                  <td className="px-6 py-4 w-12 truncate text-xl  cursor-pointer whitespace-nowrap text-start">
                     {/* <FaCopy
                       className="cursor-pointer"
                       onClick={() => {
