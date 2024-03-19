@@ -20,6 +20,7 @@ import ForgotPassword from "../../components/Auth/ForgotPassword";
 import ResetPassword from "../../components/Auth/ResetPassword";
 import Signup from "../../components/Auth/Signup";
 import { toast } from "react-toastify";
+import ComingSoon from "../../components/ComingSoon.jsx";
 
 const allRoutes = [
   {
@@ -36,15 +37,10 @@ const allRoutes = [
     component: Login,
   },
   {
-    path: APP_ROUTES.LOGOUT,
-    isProtected: false,
-    component: Login,
-  },
-  {
     path: APP_ROUTES.FORGOT_PASSWORD,
     isProtected: false,
     properties: { ketan: 2 },
-    component: ForgotPassword,
+    component: ComingSoon,
   },
   {
     path: APP_ROUTES.RESET_PASSWORD,

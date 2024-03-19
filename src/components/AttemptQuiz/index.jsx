@@ -33,7 +33,7 @@ const AttemptQuiz = (props) => {
       user: {
         email: data.email,
       },
-      answers: data.answers,
+      answers: answers,
     };
     setLoader(true);
     try {
