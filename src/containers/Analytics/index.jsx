@@ -26,10 +26,10 @@ const Analytics = (props) => {
       text: "Create a quiz",
       link: APP_ROUTES.MANUAL_MODE,
     },
-    {
-      text: "AI Mode",
-      link: APP_ROUTES.AI_MODE,
-    },
+    // {
+    //   text: "AI Mode",
+    //   link: APP_ROUTES.AI_MODE,
+    // },
     {
       text: "My Quizzes",
       link: APP_ROUTES.QUIZZES,

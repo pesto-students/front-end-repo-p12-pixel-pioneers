@@ -23,6 +23,7 @@ import TestimonialSlider from "./TestimonialSlider";
 import Carousel from "./Carousel";
 import Header from "../Header";
 import Footer from "../Footer";
+import { toast } from "react-toastify";
 
 // import { loginAction } from "./redux/actions";
 
@@ -97,14 +98,14 @@ function Home(props) {
         "Begin by selecting either manual mode or AI mode to create your quiz. In manual mode, you have full control to craft your questions, choose question types, and customize the quiz to your liking. Alternatively, use AI mode to quickly generate questions by pasting text and specifying the number of questions and quiz type.",
     },
     {
-      title: "Create your quiz",
+      title: "Edit your quiz",
       content:
-        "Begin by selecting either manual mode or AI mode to create your quiz. In manual mode, you have full control to craft your questions, choose question types, and customize the quiz to your liking. Alternatively, use AI mode to quickly generate questions by pasting text and specifying the number of questions and quiz type.",
+        "Click on the quiz you want to edit.Look for the edit icon and click on it. This action will take you to the update quiz page where you can make the necessary changes to the quiz.",
     },
     {
-      title: "Create your quiz",
+      title: "Share your quiz",
       content:
-        "Begin by selecting either manual mode or AI mode to create your quiz. In manual mode, you have full control to craft your questions, choose question types, and customize the quiz to your liking. Alternatively, use AI mode to quickly generate questions by pasting text and specifying the number of questions and quiz type.",
+        "Click  on the quiz you want to share.Look for the Link and copy it  and the link",
     },
   ];
   const teamMembers = [
@@ -199,7 +200,7 @@ function Home(props) {
       </section>
       <section id="features_section" className="container my-[15vh]">
         <h1 className="my-4 flex leading-4 text-xl items-center text-center">
-          <span className="bg-[#B9FF66] text-start font-medium text-5xl py-1 px-2 mr-8">
+          <span className="bg-[#B9FF66] text-start font-medium text-5xl py-2 px-2 mr-8">
             Features
           </span>
           Let’s look at some features that make your life easier
@@ -219,10 +220,10 @@ function Home(props) {
       </section>
       <section id="uses_section" className="container my-[15vh]">
         <h1 className="my-4 flex leading-4 text-xl items-center text-start">
-          <span className="w-fit bg-[#B9FF66] text-start font-medium text-5xl py-1 px-2 mr-8">
+          <span className="max-w-[35%] bg-[#B9FF66] text-start font-medium text-5xl py-2 px-2 mr-8">
             Use Cases
           </span>
-          <span className="max-w-[50%]">
+          <span className="max-w-[50%] leading-6">
             Your quizzes are showcased on your profile, making it easy for
             participants to find and access them. Build your reputation as a
             quizmaster and attract more attendees to your quizzes.
@@ -294,18 +295,18 @@ function Home(props) {
         </div>
       </section>
       <section id="faq_section" className="container my-[15vh]">
-        <h1 className="my-4  leading-4 text-xl items-center text-start">
-          <span className="w-full bg-[#B9FF66] text-start font-medium text-5xl py-1 px-2 mr-8">
+        <div className="flex gap-8">
+          <h1 className="my-4 w-[40%] bg-green table font-medium text-5xl py-2 px-2 mr-8    items-center text-start">
             Effortless Quiz Creation and Engagement
-          </span>
-        </h1>
-        <p className="my-8 w-[70%]  leading-4 text-xl leading-6 items-center text-start">
-          Quizzify simplifies the quiz creation process into four easy steps.
-          Choose between manual mode for customized quizzes or AI mode for quick
-          question generation. Customize your quiz, share it with participants
-          hassle-free, and track submissions and results in real-time. Elevate
-          engagement and learning with Quizzify Pro.
-        </p>
+          </h1>
+          <p className="my-8 w-[60%]   text-xl leading-6 items-center text-start">
+            Quizzify simplifies the quiz creation process into four easy steps.
+            Choose between manual mode for customized quizzes or AI mode for
+            quick question generation. Customize your quiz, share it with
+            participants hassle-free, and track submissions and results in
+            real-time. Elevate engagement and learning with Quizzify Pro.
+          </p>
+        </div>
         <div className="container">
           {FAQList.map((FAQ, index) => (
             <AccordionItem
@@ -319,10 +320,10 @@ function Home(props) {
 
       <section id="team_section" className="container my-[15vh]">
         <h1 className="my-4 flex leading-4 text-xl items-center text-start">
-          <span className="w-fit bg-[#B9FF66] text-start font-medium text-5xl py-1 px-2 mr-8">
+          <span className="w-fit bg-[#B9FF66] text-start font-medium text-5xl py-2 px-2 mr-8">
             Team
           </span>
-          <span className="max-w-[50%]">
+          <span className="max-w-[50%] leading-6">
             Meet the people behind the Quizzify. Feel free to connect with us
             for suggestions or collaborations
           </span>
@@ -335,10 +336,10 @@ function Home(props) {
       </section>
       <section id="testimonials_section" className="container my-[15vh]">
         <h1 className="my-4 flex leading-4 text-xl items-center text-start">
-          <span className="w-fit bg-[#B9FF66] text-start font-medium text-5xl py-1 px-2 mr-8">
+          <span className="w-fit bg-[#B9FF66] text-start font-medium text-5xl py-2 px-2 mr-8">
             Testimonials
           </span>
-          <span className="max-w-[50%] leading-5">
+          <span className="max-w-[50%] leading-6">
             Hear from Our Satisfied Clients: Read Our Testimonials to Learn More
             about Our Quiz Making Platform
           </span>
@@ -367,12 +368,18 @@ function Home(props) {
         <section class="mb-32 bg-[#F3F3F3] rounded-[10px]">
           <div class="flex flex-wrap relative  m-20 p-20">
             <div class="mb-12 w-full shrink-0 grow-0 basis-auto md:px-3 lg:mb-0 lg:w-5/12 lg:px-6 ">
-              <form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  toast.info("Thank you, we will be in touch with you");
+                }}
+              >
                 <div class="mt-6 space-y-6 col-span-2">
                   <div class="flex items-center gap-x-6">
                     <input
                       id="push-everything"
                       name="push-notifications"
+                      required
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-[#B9FF66] focus:ring-[#191A23]"
                     />
@@ -386,6 +393,7 @@ function Home(props) {
                   <div class="flex items-center gap-x-6">
                     <input
                       id="push-email"
+                      required
                       name="push-notifications"
                       type="radio"
                       class="h-4 w-4 border-gray-300 text-[#B9FF66] focus:ring-[#191A23]"
@@ -407,6 +415,7 @@ function Home(props) {
                     class="peer block min-h-[auto] w-full rounded border-1 py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                     id="exampleInput90"
                     placeholder="Name"
+                    required
                   />
                   <label
                     class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6]  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
@@ -418,6 +427,7 @@ function Home(props) {
                 <div class="relative mb-6 bg-white" data-te-input-wrapper-init>
                   <input
                     type="email"
+                    required
                     class="peer block min-h-[auto] w-full rounded border-1 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                     id="exampleInput91"
                     placeholder="Email address"
@@ -434,6 +444,7 @@ function Home(props) {
                     class="peer block min-h-[auto] w-full rounded border-1 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-black dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                     id="exampleFormControlTextarea1"
                     rows="3"
+                    required
                     placeholder="Your message"
                   ></textarea>
                   <label
@@ -444,7 +455,7 @@ function Home(props) {
                   </label>
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   class="mb-6 inline-block w-full rounded bg-[#191A23] text-white px-6 pt-2.5 pb-2 font-medium leading-normal transition duration-150 ease-in-out hover:bg-gray-800 focus:outline-none focus:ring-0 active:bg-gray-900"
                 >
                   Send

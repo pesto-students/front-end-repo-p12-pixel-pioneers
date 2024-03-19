@@ -205,9 +205,13 @@ const CreateFlow = (props) => {
       link: APP_ROUTES.MANUAL_MODE,
     },
     {
-      text: "AI Mode",
-      link: APP_ROUTES.AI_MODE,
+      text: "My Quizzes",
+      link: APP_ROUTES.QUIZZES,
     },
+    // {
+    //   text: "AI Mode",
+    //   link: APP_ROUTES.AI_MODE,
+    // },
     // {
     //   text: "Features",
     //   link: APP_ROUTES.HOME,

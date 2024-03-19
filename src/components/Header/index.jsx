@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { APP_ROUTES, AuthHelpers } from "../../utils";
 import { Button, Popper } from "@mui/base";
 import { FaUserCircle } from "react-icons/fa";
+import UserProfile from "./UserProfile";
 const linksDef = [
   {
     text: "Features",
@@ -72,12 +73,12 @@ const Header = ({ links = linksDef }) => {
         ) : (
           <span ref={anchorEl}>
             <Button
-              onMouseEnter={handleClick}
-              onMouseLeave={
-                () => handleClick()
-                // setTimeout(() => {
-                // }, 2000)
-              }
+              onClick={handleClick}
+              // onMouseLeave={
+              //   () => handleClick()
+              //   // setTimeout(() => {
+              //   // }, 2000)
+              // }
               className="py-2 rounded-lg  px-4 border  border-black border-1"
             >
               User Profile
@@ -100,7 +101,7 @@ const Header = ({ links = linksDef }) => {
         >
           Toggle Popper
         </button> */}
-        <Popper
+        {/* <Popper
           // id={id}
 
           onMouseEnter={() => setOpen(true)}
@@ -123,8 +124,9 @@ const Header = ({ links = linksDef }) => {
           >
             Logout
           </div>
-        </Popper>
+        </Popper> */}
       </nav>
+      <UserProfile open={open} handleClose={handleClick} />
     </header>
   );
 };
