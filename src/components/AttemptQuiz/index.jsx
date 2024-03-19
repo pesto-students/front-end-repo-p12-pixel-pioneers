@@ -30,9 +30,7 @@ const AttemptQuiz = (props) => {
 
   const submitQuiz = async () => {
     const dataToSend = {
-      user: {
-        email: data.email,
-      },
+      email: data.email,
       answers: answers,
     };
     setLoader(true);

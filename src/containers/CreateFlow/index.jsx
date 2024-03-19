@@ -201,7 +201,7 @@ const CreateFlow = (props) => {
   // console.log(generatedQuizId, "generatedQuizId");
   const links = [
     {
-      text: "Manual Mode",
+      text: "Create a quiz",
       link: APP_ROUTES.MANUAL_MODE,
     },
     {
