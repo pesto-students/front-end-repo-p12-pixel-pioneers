@@ -87,7 +87,7 @@ const ViewQuizData = (props) => {
                 {detailedResult?.map((row, index) => (
                   <tr
                     key={row.key}
-                    className={` h-[75px] + ${
+                    className={` h-[75px] max-h-[75px] + ${
                       index % 2 === 1 && "bg-[#f3f3f3]"
                     }`}
                   >
