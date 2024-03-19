@@ -126,6 +126,9 @@ const Sidebar = (props) => {
         correct_answer: false,
       });
       return;
+    } else if (!currQuestion.question_type) {
+      toast.error("Please select a question type");
+      return;
     } else if (
       !currQuestion.correct_answer &&
       currQuestion.correct_answer !== 0

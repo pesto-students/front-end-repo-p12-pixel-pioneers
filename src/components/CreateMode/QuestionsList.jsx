@@ -7,6 +7,7 @@ import AI_Modal from "./AI_Modal";
 import QuestionBankModal from "./QuestionBankModal";
 import { toast } from "react-toastify";
 import ComponentLoader from "../Loader/ComponentLoader";
+import { question_types } from "./constants";
 
 const QuestionsList = (props) => {
   const {
@@ -18,6 +19,7 @@ const QuestionsList = (props) => {
     setQuestions,
     setQuizName,
     isPoll,
+    currQuestion,
     mode,
   } = props;
 
@@ -47,6 +49,19 @@ const QuestionsList = (props) => {
     setQuestions([...questions, ...newQues]);
   };
   // console.log(selectors, "triggers");
+  const showAI = (questions, currQuestion) => {
+    if (questions.length) {
+      if (questions?.[0]?.question_type !== question_types.POLL) {
+        return true;
+      }
+      return false;
+    } else {
+      if (currQuestion.question_type !== question_types.POLL) {
+        return true;
+      }
+      return false;
+    }
+  };
   return (
     <>
       {wholeQuizSelector.status === API_CONSTANTS.loading ? (
@@ -61,7 +76,7 @@ const QuestionsList = (props) => {
             >
               Add from question bank
             </Button>
-            {!isPoll && (
+            {showAI(questions, currQuestion) && (
               <Button
                 onClick={() => setTriggers({ ...triggers, ai_modal: true })}
                 className="py-1 h-12 px-4 flex min-w-24 items-center justify-center border rounded-lg relative bg-black text-white border-black border-1"
