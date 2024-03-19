@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 const linksDef = [
   {
     text: "Features",
-    link: APP_ROUTES.HOME,
+    link: `${APP_ROUTES.HOME}#features_section`,
   },
   {
     text: "Manual Mode",

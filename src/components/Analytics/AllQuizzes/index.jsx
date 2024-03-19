@@ -5,7 +5,7 @@ import {
   getAllQuizzesAction,
   resetGetQuizzesAction,
 } from "../../../redux/actions";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaShareAlt } from "react-icons/fa";
 import { MdDelete, MdEdit } from "react-icons/md";
 import {
   API_CONSTANTS,
@@ -108,7 +108,7 @@ const AllQuizzes = (props) => {
                   Link
                 </th>
                 <th className="px-6 py-3 border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
-                  Details
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -168,7 +168,9 @@ const AllQuizzes = (props) => {
                         })}
                         // title="Edit Form"
                       >
-                        <MdEdit title="Ketan" />
+                        <span title="Edit Quiz">
+                          <MdEdit />
+                        </span>
                       </Link>
 
                       <Link
@@ -176,8 +178,23 @@ const AllQuizzes = (props) => {
                           id: row._id,
                         })}
                       >
-                        <FaExternalLinkAlt />
+                        <span title="View Details">
+                          <FaExternalLinkAlt />
+                        </span>
                       </Link>
+                      <span className="cursor-pointer" title="Share quiz link">
+                        <FaCopy
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              replaceInString(
+                                `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                                { id: row._id }
+                              )
+                            );
+                            toast.success("Quiz link copied to clipboard");
+                          }}
+                        />
+                      </span>
                     </div>
                   </td>
                 </tr>

@@ -23,6 +23,7 @@ const CreateFlow = (props) => {
   console.log(location, "location");
   const params = useParams();
   const [questions, setQuestions] = useState([]);
+  const [isPoll, setIsPoll] = useState(false);
   const [quizName, setQuizName] = useState("New Quiz");
   const [modalTrigger, setModalTrigger] = useState(false);
   const [generatedQuizId, setGeneratedQuizId] = useState(null);
@@ -115,8 +116,7 @@ const CreateFlow = (props) => {
         break;
     }
   }, [quizSelector.editQuiz]);
-  console.log(quizSelector, "quizSelector");
-  console.log(questions, "questions");
+  console.log({ questions, isPoll }, "questions");
   const createQuiz = () => {
     if (questions.length <= 0) {
       toast.error("Add atleast 1 question");
@@ -186,6 +186,13 @@ const CreateFlow = (props) => {
     //   link: APP_ROUTES.HOME,
     // },
   ];
+  useEffect(() => {
+    if (questions.length) {
+      setIsPoll(questions?.[0]?.question_type === question_types.POLL);
+    } else {
+      setIsPoll(false);
+    }
+  }, [questions]);
 
   return (
     <>
@@ -203,7 +210,8 @@ const CreateFlow = (props) => {
                 setCurrQuestion={setCurrQuestion}
                 addQuestion={addQuestion}
                 updateQuesIndex={updateQuesIndex}
-                isPoll={questions?.[0]?.question_type === question_types.POLL}
+                isPoll={isPoll}
+                setIsPoll={setIsPoll}
                 firstQues={questions?.length === 0}
                 updateQues={updateQues}
                 setQuestions={setQuestions}
@@ -214,6 +222,7 @@ const CreateFlow = (props) => {
               {/* <Sidebar {...props} /> */}
               <QuestionsList
                 submitAction={submitAction}
+                isPoll={isPoll}
                 questions={questions}
                 setQuestions={setQuestions}
                 quizName={quizName}

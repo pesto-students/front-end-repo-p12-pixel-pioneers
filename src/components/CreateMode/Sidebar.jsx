@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { APP_ROUTES } from "../../utils";
+import { APP_ROUTES, findIdenticalIds, hasDuplicateStrings } from "../../utils";
 import { AI_difficulty_level, question_types } from "./constants";
 import { Option, Select, Input, Button, TextareaAutosize } from "@mui/base";
 import OptionComponent from "./Option";
@@ -15,6 +15,7 @@ const Sidebar = (props) => {
     updateQuesIndex,
     updateQues,
     isPoll,
+    setIsPoll,
     mode,
     firstQues,
     setQuestions,
@@ -85,10 +86,6 @@ const Sidebar = (props) => {
   //   }
   // }, [currQuestion.question]);
   useEffect(() => {
-    // setErrors({ ...errors, question: false });
-    // setOptionErrors();
-  }, []);
-  useEffect(() => {
     const checkAllOptionsFilled = () => {
       let flag = true;
       currQuestion.options.forEach((option) => {
@@ -118,7 +115,7 @@ const Sidebar = (props) => {
       });
       return;
     } else if (hasDuplicateStrings(currQuestion.options)) {
-      toast.error("Options cannot be same");
+      toast.error("Options cannot be identical");
       const arr = findIdenticalIds(currQuestion.options);
       setErrors({
         ...errors,
@@ -177,30 +174,10 @@ const Sidebar = (props) => {
     }
   };
 
-  function findIdenticalIds(strings) {
-    const idMap = new Map();
-
-    // Iterate over the strings array to map each string to its index
-    strings.forEach((str, index) => {
-      if (!idMap.has(str)) {
-        idMap.set(str, [index]);
-      } else {
-        idMap.get(str).push(index);
-      }
-    });
-
-    // Filter out the IDs of identical strings
-    const identicalIds = Array.from(idMap.values()).filter(
-      (ids) => ids.length > 1
-    );
-
-    // Flatten the array of IDs
-    return identicalIds.flat();
-  }
-  function hasDuplicateStrings(arr) {
-    const uniqueSet = new Set(arr);
-    return uniqueSet.size !== arr.length;
-  }
+  // function hasDuplicateStrings(arr) {
+  //   const uniqueSet = new Set(arr);
+  //   return uniqueSet.size !== arr.length;
+  // }
   console.log(errors, "errors");
   return (
     <div className="w-full flex  flex-col gap-6 justify-start max-w-full scroll-smooth">
@@ -225,9 +202,7 @@ const Sidebar = (props) => {
         onChange={(_, newValue) => setQuestionState("question_type", newValue)}
       >
         <div className="container w-[280px] bg-white cursor-pointer shadow-lg py-4 px-0 ">
-          {(!isPoll ||
-            firstQues ||
-            currQuestion.question_type !== question_types.POLL) && (
+          {!isPoll && (
             <>
               <Option
                 className="hover:bg-slate-200 pl-4"

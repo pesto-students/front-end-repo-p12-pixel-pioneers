@@ -17,6 +17,30 @@ export const request = (url, options) => {
     .then((json) => json)
     .catch((err) => ({ err }));
 };
+export function hasDuplicateStrings(arr) {
+  const uniqueSet = new Set(arr);
+  return uniqueSet.size !== arr.length;
+}
+export function findIdenticalIds(strings) {
+  const idMap = new Map();
+
+  // Iterate over the strings array to map each string to its index
+  strings.forEach((str, index) => {
+    if (!idMap.has(str)) {
+      idMap.set(str, [index]);
+    } else {
+      idMap.get(str).push(index);
+    }
+  });
+
+  // Filter out the IDs of identical strings
+  const identicalIds = Array.from(idMap.values()).filter(
+    (ids) => ids.length > 1
+  );
+
+  // Flatten the array of IDs
+  return identicalIds.flat();
+}
 export const replaceInString = (string, values) => {
   // Iterate through the keys in the values object
   for (const key in values) {

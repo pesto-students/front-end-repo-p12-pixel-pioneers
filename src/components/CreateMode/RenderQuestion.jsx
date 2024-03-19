@@ -85,7 +85,10 @@ const RenderQuestion = (props) => {
             </Button>
             <Button
               className=" px-4 py-2 rounded-lg bg-black text-white border-black"
-              onClick={() => deleteQues(question_num - 1)}
+              onClick={() => {
+                deleteQues(question_num - 1);
+                handleClose();
+              }}
               // variant="contained"
               // color="primary"
             >

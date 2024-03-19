@@ -7,6 +7,7 @@ import RenderOption from "./RenderOption";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Quiz_Services } from "../../redux/services";
+import { findIdenticalIds, hasDuplicateStrings } from "../../utils";
 
 const AI_Modal = ({ open, handleClose, updateQues }) => {
   const [form, setForm] = useState({
@@ -18,6 +19,8 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     topic: false,
+    keywords: [],
+    noOfQuestions: false,
   });
   const updateForm = (key, value) => {
     setForm({
@@ -25,12 +28,57 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
       [key]: value,
     });
   };
+  const clearForm = () => {
+    setForm({
+      keywords: [""],
+      topic: "",
+      difficultyLevel: AI_difficulty_level.EASY,
+      noOfQuestions: 3,
+    });
+    setErrors({
+      topic: false,
+      keywords: [],
+      noOfQuestions: false,
+    });
+    setLoading(false);
+  };
   const submitForm = async () => {
     if (!form.topic.length) {
       toast.error("Please enter a topic");
       setErrors({
         ...errors,
         topic: true,
+      });
+      return;
+    } else if (!form.noOfQuestions) {
+      toast.error("Please select a valid no of questions (3 - 30)");
+      setErrors({
+        ...errors,
+        topic: false,
+        noOfQuestions: true,
+      });
+      return;
+    } else if (form.keywords.includes("")) {
+      toast.error("Please fill all keywords");
+      setErrors({
+        ...errors,
+        topic: false,
+        noOfQuestions: false,
+        keywords: form.keywords.map((opt, index) =>
+          opt.length <= 0 ? true : false
+        ),
+      });
+      return;
+    } else if (hasDuplicateStrings(form.keywords)) {
+      toast.error("Keywords cannot be identical");
+      const arr = findIdenticalIds(form.keywords);
+      setErrors({
+        ...errors,
+        keywords: form.keywords.map((item, index) =>
+          arr.includes(index) ? true : false
+        ),
+        topic: false,
+        noOfQuestions: false,
       });
       return;
     }
@@ -48,6 +96,7 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
       //     return question;
       //   });
       updateQues(data?.questions);
+      clearForm();
       setLoading(false);
       handleClose();
     } catch (error) {
@@ -62,15 +111,7 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
   };
   useEffect(() => {
     return () => {
-      setErrors({
-        ...errors,
-        topic: false,
-      });
-      setForm({
-        ...form,
-        keywords: [],
-        topic: "",
-      });
+      clearForm();
     };
   }, []);
   return (
@@ -80,8 +121,8 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
         open={open}
         onClose={handleClose}
       >
-        <div className=" py-6 px-4 pl-10 rounded-lg border gap-2 flex items-center  justify-between flex-col border-black bg-white  h-[600px] w-[800px] ">
-          <h1 className="text-2xl pl-2 pr-4 mr-auto table bg-green leading-[5rem]  font-medium  text-start">
+        <div className=" py-6 px-4 pl-10 rounded-lg border gap-2 flex items-center  justify-start flex-col border-black bg-white  h-[550px] w-[800px] ">
+          <h1 className="text-3xl pl-2 pr-4 mr-auto table bg-green leading-[4rem]  font-medium  text-start">
             Generate quiz with AI
           </h1>
           <div className="my-4 w-5/6 mr-auto flex gap-8 flex-col items-center justify-start">
@@ -152,8 +193,9 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
                   max={30}
                   slotProps={{
                     input: {
-                      className:
-                        "w-full pl-3 rounded-lg h-full focus:outline-none",
+                      className: `w-full pl-3 rounded-lg h-full focus:outline-none  ${
+                        errors.noOfQuestions && "border border-error"
+                      }`,
                     },
                   }}
                   onChange={(event, val) => updateForm("noOfQuestions", val)}
@@ -171,8 +213,16 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
                   <OptionComponent
                     key={index}
                     option={keyword}
+                    onDelete={() =>
+                      setForm({
+                        ...form,
+                        keywords: form?.keywords?.filter(
+                          (key, ind) => ind !== index
+                        ),
+                      })
+                    }
                     placeholder={"Enter Keyword"}
-                    // error={errors.options[index]}
+                    error={errors?.keywords?.[index]}
                     onChange={(val) => {
                       setForm({
                         ...form,
@@ -186,17 +236,23 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
                     }}
                   />
                 ))}
-                <div
-                  onClick={() =>
-                    setForm({
-                      ...form,
-                      keywords: [...form.keywords, ""],
-                    })
-                  }
-                  className="w-48 flex items-center text-5xl justify-center shadow-lg  box-border  h-10 "
-                >
-                  +
-                </div>
+                {form.keywords.length < 4 && (
+                  <div
+                    onClick={() => {
+                      // if (form.keywords.length >= 4) {
+                      // toast.error("Max 4 keywords allowed");
+                      // return;
+                      // }
+                      setForm({
+                        ...form,
+                        keywords: [...form.keywords, ""],
+                      });
+                    }}
+                    className="w-48 flex items-center text-5xl justify-center shadow-lg  box-border  h-10 "
+                  >
+                    +
+                  </div>
+                )}
                 {/* <OptionComponent
                   option={"+"}
                   onClick={() =>
@@ -212,13 +268,17 @@ const AI_Modal = ({ open, handleClose, updateQues }) => {
           </div>
           <div className=" flex items-center  justify-start w-full ">
             <Button
-              onClick={handleClose}
-              className="mr-2 border rounded-lg px-4 py-2 border-black"
+              onClick={() => {
+                clearForm();
+                handleClose();
+              }}
+              disabled={loading}
+              className="mr-2 h-11 border rounded-lg px-4 py-2 border-black"
             >
               Cancel
             </Button>
             <Button
-              className=" px-4 py-2 w-60 rounded-lg bg-black text-white border-black"
+              className=" px-4 py-2 w-60 h-11 rounded-lg bg-black text-white border-black"
               //   onClick={() => deleteQues(question_num - 1)}
               // variant="contained"
               onClick={submitForm}

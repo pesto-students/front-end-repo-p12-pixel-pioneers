@@ -10,7 +10,7 @@ import { Quiz_Services } from "../../redux/services";
 import { AUTH_TOKEN, DOMAIN } from "../../utils";
 import RenderQuestion from "./RenderQuestion";
 
-const QuestionBankModal = ({ open, handleClose, updateQues }) => {
+const QuestionBankModal = ({ open, handleClose, updateQues, existingQues }) => {
   const [form, setForm] = useState({
     topic: "",
   });
@@ -84,6 +84,21 @@ const QuestionBankModal = ({ open, handleClose, updateQues }) => {
       clearData();
     };
   }, []);
+  function checkDuplicateQuestions(Questions, newData) {
+    for (const newQuestion of newData) {
+      const idToCheck = newQuestion.id || newQuestion._id; // Treat id and _id as the same
+      if (
+        Questions.some(
+          (existingQuestion) =>
+            existingQuestion._id === idToCheck ||
+            existingQuestion.id === idToCheck
+        )
+      ) {
+        return true; // If any duplicate found, return true
+      }
+    }
+    return false; // If no duplicates found, return false
+  }
   const toggleNumber = (number) => {
     if (selected.includes(number)) {
       setSelected(selected.filter((n) => n !== number));
@@ -92,7 +107,14 @@ const QuestionBankModal = ({ open, handleClose, updateQues }) => {
     }
   };
   const addQuestionsToQuestionList = () => {
-    updateQues(questions.filter((ques, index) => selected.includes(index)));
+    const filtered = questions.filter((ques, index) =>
+      selected.includes(index)
+    );
+    if (checkDuplicateQuestions(existingQues, filtered)) {
+      toast.error("Please remove duplicate questions");
+      return;
+    }
+    updateQues(filtered);
     clearData();
     handleClose();
   };
@@ -103,8 +125,8 @@ const QuestionBankModal = ({ open, handleClose, updateQues }) => {
         open={open}
         onClose={handleClose}
       >
-        <div className=" py-6 px-4 pl-10 rounded-lg border gap-2 flex items-center overflow-y-auto justify-start flex-col border-black bg-white  h-[400px] w-[600px] ">
-          <h1 className="text-2xl pl-2 pr-4 mr-auto table bg-green leading-[5rem]  font-medium  text-start">
+        <div className=" py-6 px-4 pl-10 rounded-lg border gap-2 flex items-center overflow-y-auto justify-start flex-col border-black bg-white  h-[700px] w-[800px] ">
+          <h1 className="text-3xl pl-2 pr-4 mr-auto table bg-green leading-[4rem]  font-medium  text-start">
             Select from Question Bank
           </h1>
           <div className="my-4 w-5/6 mr-auto flex gap-8 flex-col items-start justify-start">
@@ -135,20 +157,20 @@ const QuestionBankModal = ({ open, handleClose, updateQues }) => {
           <div className=" flex items-center  justify-start w-full ">
             <Button
               onClick={handleClose}
-              className="mr-2 border rounded-lg px-4 py-2 border-black"
+              className="mr-2 h-11 border rounded-lg px-4 py-2 border-black"
             >
               Cancel
             </Button>
             {questions.length > 0 && (
               <Button
                 onClick={addQuestionsToQuestionList}
-                className="mr-2 border rounded-lg px-4 py-2 border-black"
+                className="mr-2 border h-11 rounded-lg px-4 py-2 border-black"
               >
                 Add Selected Questions
               </Button>
             )}
             <Button
-              className=" px-4 py-2 w-40 rounded-lg bg-black text-white border-black"
+              className=" px-4 py-2 w-40 h-11 rounded-lg bg-black text-white border-black"
               //   onClick={() => deleteQues(question_num - 1)}
               // variant="contained"
               onClick={submitForm}

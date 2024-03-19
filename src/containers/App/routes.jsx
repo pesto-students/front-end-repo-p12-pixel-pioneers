@@ -36,6 +36,11 @@ const allRoutes = [
     component: Login,
   },
   {
+    path: APP_ROUTES.LOGOUT,
+    isProtected: false,
+    component: Login,
+  },
+  {
     path: APP_ROUTES.FORGOT_PASSWORD,
     isProtected: false,
     properties: { ketan: 2 },
