@@ -85,52 +85,44 @@ const AllQuizzes = (props) => {
         <ComponentLoader />
       ) : (
         <>
-          <div className="flex items-center my-4 justify-center">
-            {/* <Button
-              onClick={() => navigate(APP_ROUTES.MANUAL_MODE)}
-              // disabled={!allOptionsFilled}
-              className={"border border-black py-2 px-6 mr-auto mt-8 rem"}
-            >
-              New quiz
-            </Button> */}
-          </div>
-
-          <table className="w-[800px]">
-            <thead className="bg-navyblue h-[75px]  w-[800px]  text-white">
-              <tr>
-                <th className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
-                  Quiz Name
-                </th>
-                <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
-                  Link
-                </th>
-                <th className="px-6 py-3 border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {quizzes?.data?.map((row, index) => (
-                <tr
-                  key={row._id}
-                  className={` min-h-[75px] w-[800px]+ ${
-                    index % 2 === 1 && "bg-[#f3f3f3]"
-                  }`}
-                >
-                  <td
-                    title={row.title}
-                    className="px-6 py-4 truncate max-w-[300px]  font-medium  text-3xl  whitespace-nowrap text-start"
+          <div className="flex items-center my-4 justify-center"></div>
+          {quizzes?.data?.length ? (
+            <table className="w-[800px]">
+              <thead className="bg-navyblue h-[75px]  w-[800px]  text-white">
+                <tr>
+                  <th className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
+                    Quiz Name
+                  </th>
+                  <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
+                    Date
+                  </th>
+                  <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
+                    Link
+                  </th>
+                  <th className="px-6 py-3 border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider ">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white">
+                {quizzes?.data?.map((row, index) => (
+                  <tr
+                    key={row._id}
+                    className={` min-h-[75px] w-[800px]+ ${
+                      index % 2 === 1 && "bg-[#f3f3f3]"
+                    }`}
                   >
-                    {row.title}
-                  </td>
-                  <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
-                    {Date.now()}
-                  </td>
-                  <td className="px-6 py-4  max-w-[600px] truncate text-xl  cursor-pointer whitespace-nowrap text-start">
-                    {/* <FaCopy
+                    <td
+                      title={row.title}
+                      className="px-6 py-4 truncate max-w-[300px]  font-medium  text-3xl  whitespace-nowrap text-start"
+                    >
+                      {row.title}
+                    </td>
+                    <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                      {Date.now()}
+                    </td>
+                    <td className="px-6 py-4  max-w-[600px] truncate text-xl  cursor-pointer whitespace-nowrap text-start">
+                      {/* <FaCopy
                       className="cursor-pointer"
                       onClick={() => {
                         navigator.clipboard.writeText(
@@ -142,65 +134,82 @@ const AllQuizzes = (props) => {
                         toast.success("Quiz link copied to clipboard");
                       }}
                     /> */}
-                    <span
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          replaceInString(
-                            `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
-                            { id: row._id }
-                          )
-                        );
-                        toast.success("Quiz link copied to clipboard");
-                      }}
-                      title={`Click to copy`}
-                    >
-                      {replaceInString(
-                        `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
-                        { id: row._id }
-                      )}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4  text-xl  text-start">
-                    <div className="flex items-center justify-start gap-4">
-                      <Link
-                        to={replaceInString(APP_ROUTES.EDIT_QUIZ, {
-                          id: row._id,
-                        })}
-                        // title="Edit Form"
+                      <span
+                        onClick={() => {
+                          navigator.clipboard.writeText(
+                            replaceInString(
+                              `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                              { id: row._id }
+                            )
+                          );
+                          toast.success("Quiz link copied to clipboard");
+                        }}
+                        title={`Click to copy`}
                       >
-                        <span title="Edit Quiz">
-                          <MdEdit />
-                        </span>
-                      </Link>
-
-                      <Link
-                        to={replaceInString(APP_ROUTES.VIEW_QUIZ_ANALYTICS, {
-                          id: row._id,
-                        })}
-                      >
-                        <span title="View Details">
-                          <FaExternalLinkAlt />
-                        </span>
-                      </Link>
-                      <span className="cursor-pointer" title="Share quiz link">
-                        <FaCopy
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              replaceInString(
-                                `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
-                                { id: row._id }
-                              )
-                            );
-                            toast.success("Quiz link copied to clipboard");
-                          }}
-                        />
+                        {replaceInString(
+                          `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                          { id: row._id }
+                        )}
                       </span>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td className="px-6 py-4  text-xl  text-start">
+                      <div className="flex items-center justify-start gap-4">
+                        <Link
+                          to={replaceInString(APP_ROUTES.EDIT_QUIZ, {
+                            id: row._id,
+                          })}
+                          // title="Edit Form"
+                        >
+                          <span title="Edit Quiz">
+                            <MdEdit />
+                          </span>
+                        </Link>
+
+                        <Link
+                          to={replaceInString(APP_ROUTES.VIEW_QUIZ_ANALYTICS, {
+                            id: row._id,
+                          })}
+                        >
+                          <span title="View Details">
+                            <FaExternalLinkAlt />
+                          </span>
+                        </Link>
+                        <span
+                          className="cursor-pointer"
+                          title="Share quiz link"
+                        >
+                          <FaCopy
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                replaceInString(
+                                  `${window.location.origin}${APP_ROUTES.ATTEMPT_QUIZ}`,
+                                  { id: row._id }
+                                )
+                              );
+                              toast.success("Quiz link copied to clipboard");
+                            }}
+                          />
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="container ">
+              <h2 className="text-3xl pl-2 pr-4   ">
+                You don't have any quiz, Create a new quiz
+              </h2>
+              <Button
+                onClick={() => navigate(APP_ROUTES.MANUAL_MODE)}
+                // disabled={!allOptionsFilled}
+                className={"border border-black py-2 px-6 mr-auto mt-8 rem"}
+              >
+                New quiz
+              </Button>
+            </div>
+          )}
         </>
       )}
     </div>
