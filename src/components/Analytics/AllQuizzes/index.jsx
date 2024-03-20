@@ -78,6 +78,14 @@ const AllQuizzes = (props) => {
     }
   }, [quizzes.status]);
   console.log(quizzes);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is zero-based
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+  };
   return (
     <div className="pb-16">
       <PageTitle noBackBtn={true} text="Your Quizzes" />
@@ -94,7 +102,7 @@ const AllQuizzes = (props) => {
                     Quiz Name
                   </th>
                   <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
-                    Date
+                    Last updated
                   </th>
                   <th className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider">
                     Link
@@ -119,7 +127,7 @@ const AllQuizzes = (props) => {
                       {row.title}
                     </td>
                     <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
-                      {Date.now()}
+                      {formatDate(row?.lastUpdatedAt)}
                     </td>
                     <td className="px-6 py-4  max-w-[600px] truncate text-xl  cursor-pointer whitespace-nowrap text-start">
                       {/* <FaCopy
