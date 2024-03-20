@@ -110,73 +110,29 @@ function Home(props) {
   ];
   const teamMembers = [
     {
-      name: "Ketan",
-      designation: "Developer",
+      name: "Ketan Verma",
+      designation: "Full stack web developer",
       description:
-        "X+ years of experience in ABC Skill. Expertise in XYZ, MNO, and DEF",
-      link: "https://www.linkedin.com/",
+        "4+ years of experience in MERN Stack. Expertise in React JS+TS,Redux, and MySQL",
+      link: "https://www.linkedin.com/ketan18710",
     },
     {
-      name: "Ketan",
-      designation: "Developer",
+      name: "Varalakshmi Devi Chintakunta",
+      designation: "Full Stack Developer",
       description:
-        "X+ years of experience in ABC Skill. Expertise in XYZ, MNO, and DEF",
-      link: "https://www.linkedin.com/",
+        "12+ years of experience in Java,J2EE,Big Data technologies",
+      link: "https://www.linkedin.com/in/varalakshmidevi-chinthakunta-b8041925b/",
     },
     {
-      name: "Ketan",
-      designation: "Developer",
+      name: "Zoheb Mamoo",
+      designation: "Designer/Developer",
       description:
-        "X+ years of experience in ABC Skill. Expertise in XYZ, MNO, and DEF",
-      link: "https://www.linkedin.com/",
+        "2+ years of experience in UI/UX Design and C++ Development. Expertise in Figma,Framer,Webflow,React and C++",
+      link: "https://www.linkedin.com/zoheb-mamoo",
     },
   ];
   return (
     <div className="">
-      {/* <header className="flex flex-row">
-        <Link
-          className="font-normal flex items-center   text-black w-1/6 text-start"
-          to={APP_ROUTES.HOME}
-        >
-          Quizzify
-        </Link>
-        <nav className="grid grid-cols-6 w-5/6">
-          <Link
-            className="font-normal flex items-center   text-black  justify-end"
-            to="/#modes_section"
-          >
-            Features
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.MANUAL_MODE}
-          >
-            Create a Quiz
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.AI_MODE}
-          >
-            Create Quiz with AI_MODE
-          </Link>
-          <Link
-            className="font-normal  flex items-center text-black  justify-end"
-            to={APP_ROUTES.HOME}
-          >
-            FAQ's
-          </Link>
-          {!AuthHelpers.isAuthenticated() && (
-            <Link
-              className="font-normal  flex items-center text-black  justify-end"
-              to={APP_ROUTES.HOME}
-            >
-              <Button className="py-1 px-4 border rounded-[10px] border-black border-1">
-                Login/Signup
-              </Button>
-            </Link>
-          )}
-        </nav>
-      </header> */}
       <Header />
       <section className=" container my-[10vh] justify-between flex gap-2 flex-row ">
         <div className="content  flex flex-col gap-8 w-[35%]">
