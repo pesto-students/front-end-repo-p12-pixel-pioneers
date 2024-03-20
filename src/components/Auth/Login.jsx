@@ -136,7 +136,7 @@ const Login = () => {
             </button> */}
             {/* <Link
               className="text-md  block w-full text-end text-blue-700"
-              to={APP_ROUTES.FORGOT_PASSWORD}
+              // to={APP_ROUTES.FORGOT_PASSWORD}
             >
               Forgot Password
             </Link> */}
