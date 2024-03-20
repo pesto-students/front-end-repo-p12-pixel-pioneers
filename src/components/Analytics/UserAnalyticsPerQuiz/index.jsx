@@ -149,58 +149,63 @@ const UserAnalyticsPerQuiz = (props) => {
       <PageTitle text={` Analytics`} />
       <section>
         {/* <Bar data={barchartData} options={options} /> */}
-
-        <table className="min-w-full ">
-          <thead className="bg-navyblue h-[75px]    text-white">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
-              >
-                Question
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
-              >
-                Submitted Answer
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
-              >
-                Correct Answer
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3  border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
-              >
-                Result
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white ">
-            {quizData?.data?.map((row, index) => (
-              <tr
-                key={row.id}
-                className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
-              >
-                <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
-                  {row.question}
-                </td>
-                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
-                  {row.userAnswer}
-                </td>
-                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
-                  {row.correctAnswer}
-                </td>
-                <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
-                  {row.isCorrect ? "Correct ✅" : "Incorrect ❌"}
-                </td>
+        {quizData?.data?.length <= 0 ? (
+          <h2 className="text-3xl pl-2 pr-4   ">
+            You don't have any quiz, Create a new quiz
+          </h2>
+        ) : (
+          <table className="min-w-full ">
+            <thead className="bg-navyblue h-[75px]    text-white">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3  border-navyblue rounded-l-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
+                >
+                  Question
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
+                >
+                  Submitted Answer
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 border-navyblue  text-left text-3xl font-medium text-white capitalize tracking-wider"
+                >
+                  Correct Answer
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3  border-navyblue rounded-r-xl text-left text-3xl font-medium text-white capitalize tracking-wider "
+                >
+                  Result
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white ">
+              {quizData?.data?.map((row, index) => (
+                <tr
+                  key={row.id}
+                  className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
+                >
+                  <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
+                    {row.question}
+                  </td>
+                  <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                    {row.userAnswer}
+                  </td>
+                  <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                    {row.correctAnswer}
+                  </td>
+                  <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
+                    {row.isCorrect ? "Correct ✅" : "Incorrect ❌"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
     </>
   );

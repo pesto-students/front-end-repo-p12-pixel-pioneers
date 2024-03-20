@@ -5,6 +5,12 @@ import { Button } from "@mui/base";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const Footer = (props) => {
+  const handleScroll = (id) => {
+    const element = document.querySelector(id);
+    const firstElement = element?.[0] ?? element;
+    if (!firstElement) return;
+    firstElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   return (
     <footer className=" bottom-0 w-full bg-[#191A23] rounded-[10px] text-white px-20 py-8">
       <div className="container w-full max-w-5xl flex justify-between items-center">
@@ -20,25 +26,29 @@ const Footer = (props) => {
         <nav className="flex justify-between gap-8 items-center ">
           <Link
             className="font-normal text-white hover:underline"
-            to={APP_ROUTES.ABOUT}
+            to={`#features_section`}
+            onClick={() => handleScroll("#features_section")}
           >
             Features
           </Link>
           <Link
             className="font-normal text-white hover:underline"
-            to={APP_ROUTES.CONTACT}
+            to={`#uses_section`}
+            onClick={() => handleScroll("#uses_section")}
           >
             Use Cases
           </Link>
           <Link
             className="font-normal text-white hover:underline"
-            to={APP_ROUTES.CONTACT}
+            to={"#testimonials_section"}
+            onClick={() => handleScroll("#testimonials_section")}
           >
             Testimonials
           </Link>
           <Link
             className="font-normal text-white hover:underline"
-            to={APP_ROUTES.CONTACT}
+            to={"#faq_section"}
+            onClick={() => handleScroll("#faq_section")}
           >
             FAQs
           </Link>

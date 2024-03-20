@@ -7,19 +7,23 @@ import UserProfile from "./UserProfile";
 const linksDef = [
   {
     text: "Features",
-    link: `${APP_ROUTES.HOME}#features_section`,
-  },
-  {
-    text: "Manual Mode",
-    link: APP_ROUTES.HOME,
+    link: `#features_section`,
+    samePage: true,
   },
   {
     text: "Testimonials",
-    link: APP_ROUTES.HOME,
+    link: "#testimonials_section",
+    samePage: true,
+    // testimonials_section,
   },
   {
     text: "FAQs",
-    link: APP_ROUTES.HOME,
+    link: `#faq_section`,
+    samePage: true,
+  },
+  {
+    text: "Create a quiz",
+    link: APP_ROUTES.MANUAL_MODE,
   },
 ];
 const Header = ({ links = linksDef }) => {
@@ -39,6 +43,13 @@ const Header = ({ links = linksDef }) => {
 
   // const open = Boolean(anchorEl);
   // const id = open ? "simple-popper" : undefined;
+
+  const handleScroll = (id) => {
+    const element = document.querySelector(id);
+    const firstElement = element?.[0] ?? element;
+    if (!firstElement) return;
+    firstElement?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   return (
     <header className="flex mb-10 w-full">
       <Link
@@ -56,6 +67,7 @@ const Header = ({ links = linksDef }) => {
                 location.pathname === link.link ? "text-green" : ""
               } text-black  justify-end`}
               to={link.link}
+              onClick={() => link.samePage && handleScroll(link.link)}
             >
               {link.text}
             </Link>
