@@ -91,7 +91,10 @@ const ViewQuizData = (props) => {
                       index % 2 === 1 && "bg-[#f3f3f3]"
                     }`}
                   >
-                    <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
+                    <td
+                      title={row.key}
+                      className="px-6 py-4 max-w-[300px] truncate w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start"
+                    >
                       {row.key}
                     </td>
                     <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
