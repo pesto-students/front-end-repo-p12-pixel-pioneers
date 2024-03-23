@@ -1,8 +1,22 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Quizzify
 
-Currently, two official plugins are available:
+Make quizzes more effiecent and modern with analytics. Use AI and question bank to enhance the whole expereince and get more work done faster
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm install 
+```
+
+```bash
+  npm run dev 
+```
+
+## Demo
+
+https://quizzify-pesto.netlify.app/
+
