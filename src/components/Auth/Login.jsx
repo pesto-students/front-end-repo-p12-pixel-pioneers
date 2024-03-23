@@ -14,7 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
-  const [error, setError] = useState({
+  const [errors, setErrors] = useState({
     email: false,
     password: false,
   });
@@ -107,7 +107,7 @@ const Login = () => {
                 input: {
                   className: `w-full border text-sm font-sans  font-normal leading-5 p-4  m-0
                rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0
-               ${error.email && "border border-error"}
+               ${errors.email && "border border-error"}
                `,
                 },
               }}
@@ -124,7 +124,7 @@ const Login = () => {
                 input: {
                   className: `w-full border text-sm font-sans  font-normal leading-5 p-4  m-0
                rounded-lg shadow-lg shadow-slate-100 focus-visible:outline-0  ${
-                 error.password && "border border-error"
+                 errors.password && "border border-error"
                }
                `,
                 },
