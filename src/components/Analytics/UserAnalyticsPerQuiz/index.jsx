@@ -189,7 +189,10 @@ const UserAnalyticsPerQuiz = (props) => {
                   key={row.id}
                   className={` h-[75px] + ${index % 2 === 1 && "bg-[#f3f3f3]"}`}
                 >
-                  <td className="px-6 py-4 w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start">
+                  <td
+                    title={row.question}
+                    className="px-6 py-4 truncate max-w-[300px] w-[25%] text-ellipsis  font-medium  text-3xl  whitespace-nowrap text-start"
+                  >
                     {row.question}
                   </td>
                   <td className="px-6 py-4 text-xl whitespace-nowrap text-start">
