@@ -54,7 +54,7 @@ const Header = ({ links = linksDef }) => {
     <header className="flex mb-10 w-full">
       <Link
         className=" text-4xl flex items-center  text-black w-1/6 text-start"
-        to={isAuth ? APP_ROUTES.QUIZZES : APP_ROUTES.HOME}
+        to={APP_ROUTES.HOME}
       >
         Quizzify.in
       </Link>
