@@ -86,7 +86,10 @@ const Login = () => {
     <div className="container w-full h-[96vh] flex justify-center items-center">
       <div className="relative  gap-2 py-4 h-[90%] flex justify-center items-center bg-gradient-to-r from-white-900 to-white-500">
         <div className="mx-auto  h-full w-1/2  rounded-lg ">
-          <h1 className="mb-3 py-2 text-4xl font-normal   text-start ">
+          <h1
+            onClick={() => navigate(APP_ROUTES.HOME)}
+            className="mb-3 py-2 text-4xl font-normal   text-start "
+          >
             Quizzify.in
           </h1>
           <h2 className="my-1 font-semibold text-[50px]  text-black text-start ">
